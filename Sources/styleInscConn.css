@@ -1,0 +1,27 @@
+/* POLICES */
+
+
+
+header, section
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input
+{
+    font-family: inherit;
+    font-size: 100%;
+    width: 10em;
+    box-sizing: border-box;
+}
+
+input[type="submit"]
+{
+    font-family: inherit;
+    font-size: 100%;
+    width: 10em;
+    box-sizing: border-box;
+    border-radius: 20px;
+}

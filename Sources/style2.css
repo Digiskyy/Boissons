@@ -1,0 +1,40 @@
+/* POLICES */
+
+
+
+header
+{
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+    padding: 0px;
+}
+
+h1
+{
+    margin: 0px;
+    padding: 0px;
+    border: 1px red solid;
+}
+
+/* MENU */
+nav ul
+{
+    list-style-type: none;
+    display: flex;
+    padding: 0px;
+    margin: 0px;
+}
+
+nav li
+{
+    margin: 10px 1% 10px 1%;
+}
+
+
+#recherche
+{
+    width: 30%;
+    height: 25px;
+    font-size: 1em;
+}
