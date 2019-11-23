@@ -35,10 +35,14 @@
 
 		foreach (explode(';',$creation) as $requete)
 		{
-        	$bdd->prepare($requete)->execute();
+			echo $requete . '<br />';
+			if(!empty($requete)) // Si la requête n'est pas vide
+				$bdd->prepare($requete)->execute();
+			else
+				echo 'Vide<br />';
     	}
 
-		echo 'Base créée';
+		echo 'Base créée<br />';
 	}
 	catch(Exception $e)
 	{
@@ -46,5 +50,5 @@
 	}
 
 	// Insertion les données
-
+	echo 'Insertion des données';
 ?>
