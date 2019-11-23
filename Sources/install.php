@@ -4,11 +4,12 @@
 
 	echo 'Bonjour';
 
-	// Création de la base de données
+	/* Création de la base de données */
 	try
 	{
 		$bdd= new PDO('mysql:host=localhost;charset=utf8', USER, '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-		$creation = 'CREATE DATABASE IF NOT EXISTS projet_boisson ;
+		$creation = 'DROP DATABASE IF EXISTS projet_boisson ;
+					CREATE DATABASE IF NOT EXISTS projet_boisson ;
 					USE projet_boisson ;
 
 					CREATE TABLE Recette (
@@ -27,10 +28,10 @@
 
 					CREATE TABLE Constitution(
 						idConst INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-						idAliment INT(6) UNSIGNED,
 						idRecette INT(6) UNSIGNED,
-						FOREIGN KEY(idAliment) REFERENCES Aliment ON DELETE CASCADE,
-						FOREIGN KEY(idRecette) REFERENCES Recette ON DELETE CASCADE
+						idAliment INT(6) UNSIGNED,
+						CONSTRAINT FOREIGN KEY (idAliment) REFERENCES Aliment(idAliment) ON DELETE CASCADE,
+						CONSTRAINT FOREIGN KEY (idRecette) REFERENCES Recette(idRecette) ON DELETE CASCADE
 					) ;';
 
 		foreach (explode(';',$creation) as $requete)
@@ -49,6 +50,38 @@
 		die('Erreur : ' . $e->getMessage());
 	}
 
-	// Insertion les données
-	echo 'Insertion des données';
+	/* Insertion des données */
+	echo '<br />Insertion des données<br />';
+
+	include('Donnees.inc.php'); // On inclut le script PHP qui contient les tableaux $Recettes et $Hiérarchie
+	
+	if(!empty($Recettes)) // Si tableau $Recettes vide ou nul
+	{
+		/* Insertion des recettes */
+		foreach($Recettes as $cocktail)
+		{
+			try
+			{
+				$insertionRecettes = 'INSERT INTO recette (titre, composition, preparation) VALUES (:titre, :composition, :preparation)';
+				$insertionRecettesRequete = $bdd->prepare($insertionRecettes);
+				$insertionRecettesRequete->execute(array('titre' => $cocktail['titre'],
+														'composition' => $cocktail['ingredients'],
+														'preparation' => $cocktail['preparation']));
+				$insertionRecettesRequete->closeCursor(); // On ferme la requête pour éviter des problèmes pour les prochaines requêtes
+			}
+			catch(PDOException $pdoErr)
+			{
+				die('Erreur : ' . $pdoErr->getMessage());
+			}
+			
+		}
+		echo 'Table recette remplie<br />';
+	}
+	else
+	{
+		echo print_r($Recettes[0]);
+		echo '$Recettes n\'existe pas ou est vide<br />';
+	}
+
+	
 ?>
