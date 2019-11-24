@@ -4,7 +4,7 @@
 
 	echo 'Bonjour';
 
-	/* === Création de la base de données === */
+	/* Création de la base de données */
 	try
 	{
 		$bdd= new PDO('mysql:host=localhost;charset=utf8', USER, '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
@@ -12,18 +12,19 @@
 					CREATE DATABASE IF NOT EXISTS projet_boisson ;
 					USE projet_boisson ;
 
-					CREATE TABLE Recettes (
+					CREATE TABLE Recette (
 						idRecette INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 						titre VARCHAR(100) NOT NULL,
 						composition TEXT NOT NULL,
 						preparation TEXT NOT NULL
 					) ;
 
-					CREATE TABLE Aliments (
+					CREATE TABLE Aliment (
 						idAliment INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-						nomAliment VARCHAR(30) NOT NULL,
-						superCategorie VARCHAR(30)
+						nom VARCHAR(30) NOT NULL,
+						superCategorie TEXT NOT NULL
 					) ;
+
 
 					CREATE TABLE Constitution(
 						idConst INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -42,17 +43,17 @@
 				echo 'Vide<br />';
     	}
 
-		echo 'Base de données créée<br />';
+		echo 'Base créée<br />';
 	}
 	catch(Exception $e)
 	{
 		die('Erreur : ' . $e->getMessage());
 	}
 
-	/* === Insertion des données === */
+	/* Insertion des données */
 	echo '<br />Insertion des données<br />';
 
-	include('Donnees.inc.php'); // On inclut le script PHP qui contient les tableaux $Recettes et $Hierarchie
+	include('Donnees.inc.php'); // On inclut le script PHP qui contient les tableaux $Recettes et $Hiérarchie
 	
 	if(!empty($Recettes)) // Si tableau $Recettes vide ou nul
 	{
@@ -61,7 +62,7 @@
 		{
 			try
 			{
-				$insertionRecettes = 'INSERT INTO recettes (titre, composition, preparation) VALUES (:titre, :composition, :preparation)';
+				$insertionRecettes = 'INSERT INTO recette (titre, composition, preparation) VALUES (:titre, :composition, :preparation)';
 				$insertionRecettesRequete = $bdd->prepare($insertionRecettes);
 				$insertionRecettesRequete->execute(array('titre' => $cocktail['titre'],
 														'composition' => $cocktail['ingredients'],
@@ -74,40 +75,11 @@
 			}
 			
 		}
-		echo 'Table recettes remplie<br />';
-
-		/* Insertion des aliments */
-		foreach($Hierarchie as $nomAliment => $aliment)
-		{
-			try
-			{
-				$insertionIngredients = 'INSERT INTO aliments (nomAliment, superCategorie) VALUES (:nomAliment, :superCategorie)';
-				$insertionIngredientsRequete = $bdd->prepare($insertionIngredients);
-				if(!empty($aliment['super-categorie'])) // Si l'aliment a des super catégories (tous sauf Aliment)
-				{
-					foreach($aliment['super-categorie'] as $superCategorie)
-					{
-						$insertionIngredientsRequete->execute(array('nomAliment'=> $nomAliment, 
-																	'superCategorie' => $superCategorie));
-					}
-				}
-				else
-				{
-					echo 'Pas de super catégorie pour ' . $nomAliment . ' <br />';
-					$insertionIngredientsRequete->execute(array('nomAliment'=> $nomAliment, 
-															'superCategorie' => NULL));
-				}
-				$insertionIngredientsRequete->closeCursor();
-			}
-			catch(PDOException $pdoErr)
-			{
-				die('Erreur : ' . $pdoErr->getMessage());
-			}
-		}
-		echo 'Table aliments remplie';
+		echo 'Table recette remplie<br />';
 	}
 	else
 	{
+		echo print_r($Recettes[0]);
 		echo '$Recettes n\'existe pas ou est vide<br />';
 	}
 
