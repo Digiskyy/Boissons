@@ -3,20 +3,39 @@
 <head>
     <meta charset="utf-8" />
     <title>WeDrink</title>
-    <link rel="Stylesheet" href="style.css" />
+    <link rel="Stylesheet" href="Style/styleIndex.css" />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
 
 <body>
     <header>
         <div class="conteneur">
+            <div class="bandeau">
+                <img class="picBandeau" src="Images/bandeau.png" alt="Bandeau">
+                <!-- MENU -->
+                <ul class="menu">
+                    <li><a class="connexion" href="./connexion.html">Connexion</a></li>
+                    <li><a class="inscription" href="./inscription.html">Inscription</a></li>
+                </ul>
+            </div>
             <div class="contenu">
-                <h1>WeDrink</h1>
+                <img class="picTitle" src="Images/LogoWeDrink.png" alt="Logo WeDrink">
                 <p class="sous-titre">Emerveillez vos papilles et vos invités avec nos délicieuses recettes de cocktails !</p>
+                <!-- CONTENU -->
+                <section>
+                    <form action="recherche.php" method="GET">
+                        <input type="search" name="recherche" id="recherche" placeholder="Que voulez-vous boire ?" autofocus required />
+                        <button type="submit" class="searchButton"><i class="fas fa-search"></i></button>
+                    </form>
+                </section>
             </div>
         </div>
     </header>
 
     <main>
+        <div class="cover">
+            
+        </div>
         <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus modi ut pariatur aliquam necessitatibus mollitia delectus fugit autem saepe quo, 
             inventore molestiae vero sint hic voluptates deserunt adipisci dolorem ipsa?
