@@ -2,9 +2,8 @@
 	define('BDD_NOM', 'projet_boisson');
 	define('USER', 'root');
 
-	echo 'Bonjour';
-
-	/* === Création de la base de données === */
+	/* =============== Création de la base de données =============== */
+	echo 'Création de la base de données et de ses tables<br />';
 	try
 	{
 		$bdd= new PDO('mysql:host=localhost;charset=utf8', USER, '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
@@ -21,42 +20,44 @@
 
 					CREATE TABLE Aliments (
 						idAliment INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-						nomAliment VARCHAR(30) NOT NULL,
-						superCategorie VARCHAR(30)
+						nomAliment VARCHAR(30) NOT NULL UNIQUE
 					) ;
 
-					CREATE TABLE Constitution(
+					CREATE TABLE Supercategories (
+						idSuperCat INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+						idAliment INT(6) UNSIGNED,
+						idAlimentSuperCategorie INT(6) UNSIGNED,
+						FOREIGN KEY (idAliment) REFERENCES Aliments(idAliment) ON DELETE CASCADE,
+						FOREIGN KEY (idAlimentSuperCategorie) REFERENCES Aliments(idAliment) ON DELETE CASCADE
+					) ;
+
+					CREATE TABLE Constitution (
 						idConst INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 						idRecette INT(6) UNSIGNED,
 						idAliment INT(6) UNSIGNED,
-						CONSTRAINT FOREIGN KEY (idAliment) REFERENCES Aliment(idAliment) ON DELETE CASCADE,
-						CONSTRAINT FOREIGN KEY (idRecette) REFERENCES Recette(idRecette) ON DELETE CASCADE
-					) ;';
+						FOREIGN KEY (idAliment) REFERENCES Aliments(idAliment) ON DELETE CASCADE,
+						FOREIGN KEY (idRecette) REFERENCES Recettes(idRecette) ON DELETE CASCADE
+					)';
 
 		foreach (explode(';',$creation) as $requete)
 		{
-			echo $requete . '<br />';
-			if(!empty($requete)) // Si la requête n'est pas vide
-				$bdd->prepare($requete)->execute();
-			else
-				echo 'Vide<br />';
+			$bdd->prepare($requete)->execute();
     	}
-
-		echo 'Base de données créée<br />';
+		echo '=> Base de données créée<br />';
 	}
 	catch(Exception $e)
 	{
 		die('Erreur : ' . $e->getMessage());
 	}
 
-	/* === Insertion des données === */
+	/* =============== Insertion des données =============== */
 	echo '<br />Insertion des données<br />';
 
 	include('Donnees.inc.php'); // On inclut le script PHP qui contient les tableaux $Recettes et $Hierarchie
 	
-	if(!empty($Recettes)) // Si tableau $Recettes vide ou nul
+	if(!empty($Recettes)) // Si tableau $Recettes non vide et non nul
 	{
-		/* Insertion des recettes */
+		/* ======== Insertion des recettes ======== */
 		foreach($Recettes as $cocktail)
 		{
 			try
@@ -74,42 +75,69 @@
 			}
 			
 		}
-		echo 'Table recettes remplie<br />';
+		echo '=> Table recettes remplie<br />';
 
-		/* Insertion des aliments */
+		/* ======== Insertion des aliments ======== */
 		foreach($Hierarchie as $nomAliment => $aliment)
 		{
 			try
 			{
-				$insertionIngredients = 'INSERT INTO aliments (nomAliment, superCategorie) VALUES (:nomAliment, :superCategorie)';
-				$insertionIngredientsRequete = $bdd->prepare($insertionIngredients);
-				if(!empty($aliment['super-categorie'])) // Si l'aliment a des super catégories (tous sauf Aliment)
-				{
-					foreach($aliment['super-categorie'] as $superCategorie)
-					{
-						$insertionIngredientsRequete->execute(array('nomAliment'=> $nomAliment, 
-																	'superCategorie' => $superCategorie));
-					}
-				}
-				else
-				{
-					echo 'Pas de super catégorie pour ' . $nomAliment . ' <br />';
-					$insertionIngredientsRequete->execute(array('nomAliment'=> $nomAliment, 
-															'superCategorie' => NULL));
-				}
-				$insertionIngredientsRequete->closeCursor();
+				$insertionAliments = 'INSERT INTO aliments (nomAliment) VALUES (:nomAliment)';
+				$insertionAlimentsRequete = $bdd->prepare($insertionAliments);
+				$insertionAlimentsRequete->execute(array('nomAliment' => $nomAliment));
+				$insertionAlimentsRequete->closeCursor();
 			}
 			catch(PDOException $pdoErr)
 			{
 				die('Erreur : ' . $pdoErr->getMessage());
 			}
 		}
-		echo 'Table aliments remplie';
+		echo '=> Table Aliments remplie<br />';
+
+		/* ======== Insertion des super-catégories ======== */
+		foreach($Hierarchie as $nomAliment => $aliment)
+		{
+			try
+			{
+				if(!empty($aliment['super-categorie'])) // Si l'aliment a des super-catégories (tous sauf Aliment)
+				{
+					/* Préparation de la requête */
+					$insertionSupCat = 'INSERT INTO Supercategories (idAliment, idAlimentSuperCategorie)
+										VALUES (
+										(SELECT idAliment
+											FROM
+											(SELECT idAliment, nomAliment
+												FROM Aliments
+												WHERE nomAliment = :nomA) AS aliment_actuel),
+										(SELECT idAliment
+											FROM
+											(SELECT idAliment, nomAliment
+												FROM Aliments
+												WHERE nomAliment = :nomSC) AS aliment_superCat))'; // Ne pas oublier de mettre un alias à la table créée par une sous-requête depuis un FROM
+					$insertionSupCatRequete = $bdd->prepare($insertionSupCat);
+
+					/* Exécution de la requête */
+					foreach($aliment['super-categorie'] as $superCategorie)
+					{
+						//echo 'nomA : ' . $nomAliment . ' | nomSC : ' . $superCategorie . '<br />';
+						$insertionSupCatRequete->execute(array('nomA' => $nomAliment, 'nomSC' => $superCategorie));
+						$insertionSupCatRequete->closeCursor();
+					}
+				}
+				else
+				{
+					echo 'Pas de super-catégorie pour ' . $nomAliment . '<br />';
+				}
+			}
+			catch(PDOException $pdoErr)
+			{
+				die('Erreur : ' . $pdoErr->getMessage());
+			}
+		}
+		echo '=> Table Supercategories remplie<br />';
 	}
 	else
 	{
 		echo '$Recettes n\'existe pas ou est vide<br />';
 	}
-
-	
 ?>
