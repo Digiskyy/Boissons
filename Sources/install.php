@@ -2,14 +2,8 @@
 	define('BDD_NOM', 'projet_boisson');
 	define('USER', 'root');
 
-<<<<<<< HEAD
 	/* =============== Création de la base de données =============== */
 	echo 'Création de la base de données et de ses tables<br />';
-=======
-	echo 'Bonjour';
-
-	/* Création de la base de données */
->>>>>>> ba97bfd26d691a53a3bf9e6ce700983d47324d9f
 	try
 	{
 		$bdd= new PDO('mysql:host=localhost;charset=utf8', USER, '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
@@ -17,16 +11,15 @@
 					CREATE DATABASE IF NOT EXISTS projet_boisson ;
 					USE projet_boisson ;
 
-					CREATE TABLE Recette (
+					CREATE TABLE Recettes (
 						idRecette INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 						titre VARCHAR(100) NOT NULL,
 						composition TEXT NOT NULL,
 						preparation TEXT NOT NULL
 					) ;
 
-					CREATE TABLE Aliment (
+					CREATE TABLE Aliments (
 						idAliment INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-<<<<<<< HEAD
 						nomAliment VARCHAR(30) NOT NULL UNIQUE
 					) ;
 
@@ -39,14 +32,6 @@
 					) ;
 
 					CREATE TABLE Constitution (
-=======
-						nom VARCHAR(30) NOT NULL,
-						superCategorie TEXT NOT NULL
-					) ;
-
-
-					CREATE TABLE Constitution(
->>>>>>> ba97bfd26d691a53a3bf9e6ce700983d47324d9f
 						idConst INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 						idRecette INT(6) UNSIGNED,
 						idAliment INT(6) UNSIGNED,
@@ -58,23 +43,14 @@
 		{
 			$bdd->prepare($requete)->execute();
     	}
-<<<<<<< HEAD
 		echo '=> Base de données créée<br />';
-=======
-
-		echo 'Base créée<br />';
->>>>>>> ba97bfd26d691a53a3bf9e6ce700983d47324d9f
 	}
 	catch(Exception $e)
 	{
 		die('Erreur : ' . $e->getMessage());
 	}
 
-<<<<<<< HEAD
 	/* =============== Insertion des données =============== */
-=======
-	/* Insertion des données */
->>>>>>> ba97bfd26d691a53a3bf9e6ce700983d47324d9f
 	echo '<br />Insertion des données<br />';
 
 	include('Donnees.inc.php'); // On inclut le script PHP qui contient les tableaux $Recettes et $Hiérarchie
@@ -86,7 +62,7 @@
 		{
 			try
 			{
-				$insertionRecettes = 'INSERT INTO recette (titre, composition, preparation) VALUES (:titre, :composition, :preparation)';
+				$insertionRecettes = 'INSERT INTO Recettes (titre, composition, preparation) VALUES (:titre, :composition, :preparation)';
 				$insertionRecettesRequete = $bdd->prepare($insertionRecettes);
 				$insertionRecettesRequete->execute(array('titre' => $cocktail['titre'],
 														'composition' => $cocktail['ingredients'],
@@ -99,7 +75,6 @@
 			}
 			
 		}
-<<<<<<< HEAD
 		echo '=> Table recettes remplie<br />';
 
 		/* ======== Insertion des aliments ======== */
@@ -107,7 +82,7 @@
 		{
 			try
 			{
-				$insertionAliments = 'INSERT INTO aliments (nomAliment) VALUES (:nomAliment)';
+				$insertionAliments = 'INSERT INTO Aliments (nomAliment) VALUES (:nomAliment)';
 				$insertionAlimentsRequete = $bdd->prepare($insertionAliments);
 				$insertionAlimentsRequete->execute(array('nomAliment' => $nomAliment));
 				$insertionAlimentsRequete->closeCursor();
@@ -160,9 +135,6 @@
 			}
 		}
 		echo '=> Table Supercategories remplie<br />';
-=======
-		echo 'Table recette remplie<br />';
->>>>>>> ba97bfd26d691a53a3bf9e6ce700983d47324d9f
 	}
 	else
 	{
