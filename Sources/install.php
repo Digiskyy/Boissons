@@ -105,15 +105,11 @@
 					$insertionSupCat = 'INSERT INTO Supercategories (idAliment, idAlimentSuperCategorie)
 										VALUES (
 										(SELECT idAliment
-											FROM
-											(SELECT idAliment, nomAliment
-												FROM Aliments
-												WHERE nomAliment = :nomA) AS aliment_actuel),
+											FROM Aliments
+											WHERE nomAliment = :nomA),
 										(SELECT idAliment
-											FROM
-											(SELECT idAliment, nomAliment
-												FROM Aliments
-												WHERE nomAliment = :nomSC) AS aliment_superCat));'; // Ne pas oublier de mettre un alias à la table créée par une sous-requête depuis un FROM
+											FROM Aliments
+											WHERE nomAliment = :nomSC));'; // Ne pas oublier de mettre un alias à la table créée par une sous-requête depuis un FROM
 					$insertionSupCatRequete = $bdd->prepare($insertionSupCat);
 
 					/* Exécution de la requête */
