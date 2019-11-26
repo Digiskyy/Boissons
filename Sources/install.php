@@ -1,5 +1,5 @@
 <?php
-	define('BDD_NOM', 'projet_boisson');
+	define('BDD_NOM', 'projet_boissons');
 	define('USER', 'root');
 
 	/* =============== Création de la base de données =============== */
@@ -7,9 +7,9 @@
 	try
 	{
 		$bdd= new PDO('mysql:host=localhost;charset=utf8', USER, '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-		$creation = 'DROP DATABASE IF EXISTS projet_boisson ;
-					CREATE DATABASE IF NOT EXISTS projet_boisson ;
-					USE projet_boisson ;
+		$creation = 'DROP DATABASE IF EXISTS projet_boissons ;
+					CREATE DATABASE IF NOT EXISTS projet_boissons ;
+					USE projet_boissons ;
 
 					CREATE TABLE Recettes (
 						idRecette INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -37,6 +37,14 @@
 						idAliment INT(6) UNSIGNED,
 						FOREIGN KEY (idAliment) REFERENCES Aliments(idAliment) ON UPDATE CASCADE,
 						FOREIGN KEY (idRecette) REFERENCES Recettes(idRecette) ON UPDATE CASCADE
+					) ;
+					
+					CREATE TABLE Utilisateurs (
+						idUtilisateur INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+						pseudo VARCHAR(30) NOT NULL UNIQUE,
+						mdp VARCHAR(30) NOT NULL,
+						age INT(6) UNSIGNED NOT NULL,
+						dateCreation DATETIME NOT NULL
 					)';
 
 		foreach (explode(';',$creation) as $requete)
