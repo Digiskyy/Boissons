@@ -3,7 +3,7 @@
 
 if(isset($_POST['pseudo']) AND isset($_POST['mdp']) AND isset($_POST['mdpConf']) AND $_POST['age'])
 {
-    echo 'pseudo : ' . $_POST['pseudo'] . ' | mdp : ' . $_POST['mdp'] . ' | mdpConf : ' . $_POST['mdpConf'] . ' | age : ' . $_POST['age'] . '<br />';
+    //echo 'pseudo : ' . $_POST['pseudo'] . ' | mdp : ' . $_POST['mdp'] . ' | mdpConf : ' . $_POST['mdpConf'] . ' | age : ' . $_POST['age'] . '<br />';
 
     $mdp = $_POST['mdp'];
     $mdpConf = $_POST['mdpConf'];

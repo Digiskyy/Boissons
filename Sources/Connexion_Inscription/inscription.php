@@ -1,14 +1,14 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <link rel="Stylesheet" href="Style/styleInscConn.css" />
+    <link rel="Stylesheet" href="../Style/styleInscConn.css" />
     <title>WeDrink | Inscription</title>
 </head>
 
 <body>
     <!-- EN-TETE -->
     <header>
-        <img class="picBandeau" src="Images/bandeau.png" alt="Bandeau">
+        <img class="picBandeau" src="../Images/bandeau.png" alt="Bandeau">
     </header>
     
     <!-- CONTENU -->
