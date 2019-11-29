@@ -16,21 +16,50 @@
         $bdd = new PDO('mysql:host=localhost;dbname=projet_boissons;charset=utf8;', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
         /* ===== Recherche dans la table Recettes ===== */
-        $rechercheRecettes = 'SELECT * FROM Recettes WHERE LOWER(titre) LIKE LOWER(?);';
+
+        /* Recherche de toutes les recettes contenant le mot (ou une partie du mot) entré */
+        $rechercheRecettes = 'SELECT *
+                            FROM Recettes
+                            WHERE LOWER(titre) LIKE LOWER(?)
+                            ORDER BY titre asc;';
         $rechercheRecettesRequete = $bdd->prepare($rechercheRecettes);
         $rechercheRecettesRequete->execute(array('%' . $recherche . '%')); // % dans une clause LIKE veut dire 0 ou 1 ou plusieurs caractères (LIKE ne prend pas de regex)
 
-        if($donnees = $rechercheRecettesRequete->fetch()) // Si la recherche n'est pas vide
+        echo 'Recettes correspondantes au motif entré :<br />';
+        if($recetteParRecette = $rechercheRecettesRequete->fetch()) // Si la recherche n'est pas vide
         {
             do
             {
-                echo 'Résultat dans la table Recettes :<br />';
-                echo 'idRecette = ' . $donnees['idRecette'] . ' | titre = ' . $donnees['titre'] . '<br />';
-            } while($donnees = $rechercheRecettesRequete->fetch());
+                echo 'idRecette = ' . $recetteParRecette['idRecette'] . ' | titre = ' . htmlspecialchars($recetteParRecette['titre']) . '<br />';
+            } while($recetteParRecette = $rechercheRecettesRequete->fetch());
         }
-        else // Pas de résultat dans la table Recettes
+        else // Pas de recettes trouvée dans la table Recettes
         {
-            echo 'Pas de résultat dans la table Recettes<br />';
+            echo 'Pas de recettes dont le titre ressemble le mot entré<br />';
+        }
+
+        /* Recherche de toutes les recettes dont un ou plusieurs ingrédients correspondent au mot (ou une partie du mot) entré */
+        $rechercheIngredients = 'SELECT *
+                                FROM Recettes
+                                INNER JOIN Constitution ON Recettes.idRecette = Constitution.idRecette
+                                INNER JOIN Aliments ON Constitution.idAliment = Aliments.idAliment
+                                WHERE LOWER(nomAliment) LIKE LOWER(?) AND LOWER(titre) NOT LIKE LOWER(?)
+                                GROUP BY titre
+                                ORDER BY titre ASC;'; // TO DO : Mettre LIMIT x,x pour limiter le nombre de résultat et en faire plusieurs "page" // On met la clause NOT LIKE pour ne pas remettre les recettes de la requête précédente
+        $rechercheIngredientsRequete = $bdd->prepare($rechercheIngredients);
+        $rechercheIngredientsRequete->execute(array('%' . $recherche . '%', '%' . $recherche . '%'));
+
+        echo '<br />Recettes dont les ingrédients correspondent au motif entré :<br />';
+        if($recetteParIngredient = $rechercheIngredientsRequete->fetch()) // Si la recherche n'est pas vide
+        {
+            do
+            {
+                echo 'idRecette = ' . $recetteParIngredient['idRecette'] . ' | titre = ' . htmlspecialchars($recetteParIngredient['titre']) . '<br />';
+            } while($recetteParIngredient = $rechercheIngredientsRequete->fetch());
+        }
+        else // Pas de recettes trouvée dans la table Recettes
+        {
+            echo 'Pas de recettes dont un ingrédient ressemble au le mot entré<br />';
         }
 
         /* ===== Recherche dans la table Aliments ===== */
