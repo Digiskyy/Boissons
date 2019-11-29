@@ -17,11 +17,11 @@
 	        	<h1>Connexion</h1>
 	            <p>
 	                <label for="pseudo">Pseudo :</label>
-	                <input type="text" name="pseudo" id="pseudo" autofocus required />
+	                <input type="text" name="pseudo" id="pseudo" class="inputEcrivable" autofocus required />
 	            </p>
 	            <p>
 	                <label for="mdp">Mot de passe :</label>
-	                <input type="password" name="mdp" id="mdp" required/>
+	                <input type="password" name="mdp" id="mdp" class="inputEcrivable" required/>
 	            </p>
 	            <p><input type="submit"  value="Se connecter" /></p>
 	        </form>

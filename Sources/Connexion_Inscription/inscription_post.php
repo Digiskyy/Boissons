@@ -1,7 +1,9 @@
 <?php
 /* Page qui permet d'enregistrer les informations de l'utilisateur dans la base de données et qui redirigera vers la page de connexion */
 
-if(isset($_POST['pseudo']) AND isset($_POST['mdp']) AND isset($_POST['mdpConf']) AND $_POST['age'])
+if(isset($_POST['pseudo']) 
+    AND isset($_POST['mdp']) 
+    AND isset($_POST['mdpConf']))
 {
     //echo 'pseudo : ' . $_POST['pseudo'] . ' | mdp : ' . $_POST['mdp'] . ' | mdpConf : ' . $_POST['mdpConf'] . ' | age : ' . $_POST['age'] . '<br />';
 
@@ -14,9 +16,23 @@ if(isset($_POST['pseudo']) AND isset($_POST['mdp']) AND isset($_POST['mdpConf'])
         {
             $bdd = new PDO('mysql:host=localhost;dbname=projet_boissons;charset=utf8;', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
-            $insertionUser = 'INSERT INTO Utilisateurs(pseudo, mdp, age, dateCreation) VALUES (:pseudo, :mdp, :age, NOW());';
+            $insertionUser = 'INSERT INTO Utilisateurs(pseudo, mdp, sexe, prenom, nom, age, email, telephone, adresse, codePostal, ville, dateCreation) 
+                                VALUES (:pseudo, :mdp, :sexe, :prenom, :nom, :age, :email, :tel, :adresse, :codePostal, :ville, NOW());';
             $insertionUserRequete = $bdd->prepare($insertionUser);
-            $insertionUserRequete->execute(array('pseudo' => $_POST['pseudo'], 'mdp' => $mdp, 'age' => $_POST['age']));
+
+            /* Insertion des données utilisateurs en fonction de leur remplissement ou pas */
+            $donnees = array('pseudo' => $_POST['pseudo'], 'mdp' => $mdp);
+            remplirTableau($donnees, 'sexe');
+            remplirTableau($donnees, 'prenom');
+            remplirTableau($donnees, 'nom');
+            remplirTableau($donnees, 'age');
+            remplirTableau($donnees, 'email');
+            remplirTableau($donnees, 'tel');
+            remplirTableau($donnees, 'adresse');
+            remplirTableau($donnees, 'codePostal');
+            remplirTableau($donnees, 'ville');
+
+            $insertionUserRequete->execute($donnees);
             $insertionUserRequete->closeCursor();
         }
         catch(PDOException $e)
@@ -33,6 +49,15 @@ if(isset($_POST['pseudo']) AND isset($_POST['mdp']) AND isset($_POST['mdpConf'])
     }
 }
 else
-    echo 'Une des valeurs du formulaire n\'existe pas.<br />';
+    echo 'Une des valeurs du formulaire n\'existe pas.<br />'; // TO DO : Faire une page d'erreur
+
+
+function remplirTableau(&$tableau, $cle) // Passage du tableau par référence
+{
+    if(isset($_POST[$cle]))
+        $tableau[$cle] = $_POST[$cle]; // Rajoute une valeur dans le tableau avec sa clé sans effacer le tableau
+    else
+        $tableau[$cle] = NULL;
+}
 
 ?>

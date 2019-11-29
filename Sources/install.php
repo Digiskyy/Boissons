@@ -43,7 +43,15 @@
 						idUtilisateur INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 						pseudo VARCHAR(30) NOT NULL UNIQUE,
 						mdp VARCHAR(30) NOT NULL,
-						age INT(6) UNSIGNED NOT NULL,
+						sexe VARCHAR(1),
+						prenom VARCHAR(30),
+						nom VARCHAR(30),
+						age INT(6) UNSIGNED,
+						email VARCHAR(30),
+						telephone VARCHAR(30),
+						adresse VARCHAR(100),
+						codePostal VARCHAR(30),
+						ville VARCHAR(30),
 						dateCreation DATETIME NOT NULL
 					) ;
 					

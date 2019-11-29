@@ -11,6 +11,15 @@
     src: url(../Polices/OpenSans-Light.ttf) format('truetype'); 
 }
 
+#picBandeau
+{
+    top: 0px;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    margin: 0px;
+}
+
 header, section
 {
     display: flex;
@@ -22,25 +31,49 @@ header, section
 
 body
 {
-    font-family: 'Open Sans', Helvetica, sans-serif;
     background: #506d78;
 }
 
 h1
 {
     text-align: center;
+    font-size: 2.5em;
+    color: #506d78;
+}
+
+#indication
+{
+    font-family: 'Open Sans Light';
+    font-size: 1em;
+    text-decoration: none;
+}
+
+#indication em
+{
+    font-family: 'Open Sans';
+    font-size: 1.1em;
+    font-style: normal;
+    background-color: inherit;
 }
 
 section
 {
     font-family: 'Open Sans', Helvetica, sans-serif;
-    font-size: 1em;
+    font-size: 1.1em;
 }
 
-input
+fieldset
+{
+    font-size: 1em;
+    border: 1px solid #ccc;
+    margin: 0px;
+}
+
+legend
 {
     font-family: 'Open Sans Light', Helvetica, sans-serif;
-    font-size: 1em;
+    font-size: 1.2em;
+    text-shadow: 2px 2px 2px #506d78;
 }
 
 section, h1
@@ -59,7 +92,13 @@ form {
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
-input[type=text], input[type=password]
+input
+{
+    font-family: 'Open Sans Light', Helvetica, sans-serif;
+    font-size: 1em;
+}
+
+.inputEcrivable /*input:not(input[type=radio]) Devrait sélectionner tous les input sauf ceux qui sont de type radio */
 {
     width: 100%;
     padding: 12px 20px;
@@ -69,13 +108,28 @@ input[type=text], input[type=password]
     box-sizing: border-box;
 }
 
-input[type=text], input[type=number] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
+.inputEcrivable:hover, .inputEcrivable:focus
+{
+    background-color: #e8f8ff;
+}
+
+/*.inputEcrivable:invalid
+{
+    background-color: #ffe8e8;
+    border: 1px solid rgb(255, 200, 200);
+}*/
+
+.radioBouton
+{
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+}
+
+.radioBouton label
+{
+    font-family: 'Open Sans Light', Helvetica, sans-serif;
+    font-size: 1em;
 }
 
 input[type=submit]
@@ -88,7 +142,7 @@ input[type=submit]
     cursor: pointer;
     width: 100%;
     font-family: 'Open Sans', Helvetica, sans-serif;
-    font-size: 1em;
+    font-size: 1.5em;
 }
 
 input[type=submit]:hover
@@ -96,13 +150,4 @@ input[type=submit]:hover
     background-color: white;
     color: #506d78;
     border: 2px solid #506d78;
-}
-
-.picBandeau
-{
-    top: 0px;
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    margin: 0px;
 }
