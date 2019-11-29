@@ -27,16 +27,16 @@
 						idSuperCat INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 						idAliment INT(6) UNSIGNED,
 						idAlimentSuperCategorie INT(6) UNSIGNED,
-						FOREIGN KEY (idAliment) REFERENCES Aliments(idAliment) ON DELETE CASCADE,
-						FOREIGN KEY (idAlimentSuperCategorie) REFERENCES Aliments(idAliment) ON DELETE CASCADE
+						FOREIGN KEY (idAliment) REFERENCES Aliments(idAliment) ON UPDATE CASCADE ON DELETE CASCADE,
+						FOREIGN KEY (idAlimentSuperCategorie) REFERENCES Aliments(idAliment) ON UPDATE CASCADE ON DELETE CASCADE
 					) ;
 
 					CREATE TABLE Constitution (
 						idConst INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 						idRecette INT(6) UNSIGNED,
 						idAliment INT(6) UNSIGNED,
-						FOREIGN KEY (idAliment) REFERENCES Aliments(idAliment) ON UPDATE CASCADE,
-						FOREIGN KEY (idRecette) REFERENCES Recettes(idRecette) ON UPDATE CASCADE
+						FOREIGN KEY (idAliment) REFERENCES Aliments(idAliment) ON UPDATE CASCADE ON DELETE CASCADE,
+						FOREIGN KEY (idRecette) REFERENCES Recettes(idRecette) ON UPDATE CASCADE ON DELETE CASCADE
 					) ;
 					
 					CREATE TABLE Utilisateurs (
@@ -45,6 +45,14 @@
 						mdp VARCHAR(30) NOT NULL,
 						age INT(6) UNSIGNED NOT NULL,
 						dateCreation DATETIME NOT NULL
+					) ;
+					
+					CREATE TABLE RecettesPreferees (
+						idRP INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+						idUtilisateur INT(6) UNSIGNED NOT NULL,
+						idRecette INT(6) UNSIGNED NOT NULL,
+						FOREIGN KEY (idUtilisateur) REFERENCES Utilisateurs(idUtilisateur) ON UPDATE CASCADE ON DELETE CASCADE,
+						FOREIGN KEY (idRecette) REFERENCES Recettes(idRecette) ON UPDATE CASCADE ON DELETE CASCADE
 					)';
 
 		foreach (explode(';',$creation) as $requete)

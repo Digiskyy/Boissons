@@ -35,7 +35,7 @@
         }
         else // Pas de recettes trouvée dans la table Recettes
         {
-            echo 'Pas de recettes dont le titre ressemble le mot entré<br />';
+            echo 'Pas de recettes dont le titre ressemble au mot entré<br />';
         }
 
         /* Recherche de toutes les recettes dont un ou plusieurs ingrédients correspondent au mot (ou une partie du mot) entré */
@@ -45,7 +45,7 @@
                                 INNER JOIN Aliments ON Constitution.idAliment = Aliments.idAliment
                                 WHERE LOWER(nomAliment) LIKE LOWER(?) AND LOWER(titre) NOT LIKE LOWER(?)
                                 GROUP BY titre
-                                ORDER BY titre ASC;'; // TO DO : Mettre LIMIT x,x pour limiter le nombre de résultat et en faire plusieurs "page" // On met la clause NOT LIKE pour ne pas remettre les recettes de la requête précédente
+                                ORDER BY titre ASC;'; // TO DO : Mettre LIMIT x,x pour limiter le nombre de résultat et en faire plusieurs "pages" // On met la clause NOT LIKE pour ne pas remettre les recettes de la requête précédente
         $rechercheIngredientsRequete = $bdd->prepare($rechercheIngredients);
         $rechercheIngredientsRequete->execute(array('%' . $recherche . '%', '%' . $recherche . '%'));
 
@@ -57,9 +57,9 @@
                 echo 'idRecette = ' . $recetteParIngredient['idRecette'] . ' | titre = ' . htmlspecialchars($recetteParIngredient['titre']) . '<br />';
             } while($recetteParIngredient = $rechercheIngredientsRequete->fetch());
         }
-        else // Pas de recettes trouvée dans la table Recettes
+        else // Pas de recette trouvée dans la table Recettes
         {
-            echo 'Pas de recettes dont un ingrédient ressemble au le mot entré<br />';
+            echo 'Pas de recettes dont un ingrédient ressemble au mot entré<br />';
         }
 
         /* ===== Recherche dans la table Aliments ===== */
