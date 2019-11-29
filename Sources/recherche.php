@@ -16,9 +16,9 @@
         $bdd = new PDO('mysql:host=localhost;dbname=projet_boissons;charset=utf8;', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
         /* ===== Recherche dans la table Recettes ===== */
-        $rechercheRecettes = 'SELECT * FROM Recettes WHERE titre = ?;';
+        $rechercheRecettes = 'SELECT * FROM Recettes WHERE LOWER(titre) LIKE LOWER(?);';
         $rechercheRecettesRequete = $bdd->prepare($rechercheRecettes);
-        $rechercheRecettesRequete->execute(array($recherche));
+        $rechercheRecettesRequete->execute(array('%' . $recherche . '%')); // % dans une clause LIKE veut dire 0 ou 1 ou plusieurs caractères (LIKE ne prend pas de regex)
 
         if($donnees = $rechercheRecettesRequete->fetch()) // Si la recherche n'est pas vide
         {
@@ -30,13 +30,13 @@
         }
         else // Pas de résultat dans la table Recettes
         {
-
+            echo 'Pas de résultat dans la table Recettes<br />';
         }
 
         /* ===== Recherche dans la table Aliments ===== */
+        // Faire recherche pour les sous-catégories et une autre pour les autres super-catégories
 
-
-        // Si les deux recherches ne donne aucun résultat, afficher un message sur la page
+        // Si les deux recherches ne donnent aucun résultat, afficher un message sur la page
     }
     catch(PDOException $e)
     {
