@@ -1,3 +1,16 @@
+/* Polices d'éccriture */
+@font-face
+{
+    font-family: 'Open Sans';
+    src: url(../Polices/OpenSans-Regular.ttf) format('truetype'); 
+}
+
+@font-face
+{
+    font-family: 'Open Sans Light';
+    src: url(../Polices/OpenSans-Light.ttf) format('truetype'); 
+}
+
 header, section
 {
     display: flex;
@@ -9,13 +22,25 @@ header, section
 
 body
 {
-    font-family: Helvetica, sans-serif;
+    font-family: 'Open Sans', Helvetica, sans-serif;
     background: #506d78;
 }
 
 h1
 {
     text-align: center;
+}
+
+section
+{
+    font-family: 'Open Sans', Helvetica, sans-serif;
+    font-size: 1em;
+}
+
+input
+{
+    font-family: 'Open Sans Light', Helvetica, sans-serif;
+    font-size: 1em;
 }
 
 section, h1
@@ -27,29 +52,21 @@ section, h1
 
 form {
     width:100%;
-    padding: 30px;
+    padding: 30 30px 10px 30px;
+    margin: 0px;
     border: 1px solid #f1f1f1;
     background: #fff;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password]
+{
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
-}
-
-input[type=submit] {
-    background-color: #506d78;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
 }
 
 input[type=text], input[type=number] {
@@ -61,10 +78,24 @@ input[type=text], input[type=number] {
     box-sizing: border-box;
 }
 
-input[type=submit]:hover {
+input[type=submit]
+{
+    background-color: #506d78;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 2px solid #506d78;
+    cursor: pointer;
+    width: 100%;
+    font-family: 'Open Sans', Helvetica, sans-serif;
+    font-size: 1em;
+}
+
+input[type=submit]:hover
+{
     background-color: white;
     color: #506d78;
-    border: 1px solid #506d78;
+    border: 2px solid #506d78;
 }
 
 .picBandeau
@@ -72,5 +103,6 @@ input[type=submit]:hover {
     top: 0px;
     position: relative;
     z-index: 2;
-    width: 102%;
+    width: 100%;
+    margin: 0px;
 }
