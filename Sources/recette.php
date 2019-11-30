@@ -3,15 +3,51 @@
  * Cette page affichera tous les éléments constituant la recette demandée par la méthode GET de la recherche
  */
 
+    if(isset($_GET['idRecette']))
+    {
+        try
+        {
+            /* ===== Connexion à la base de données ===== */
+            $bdd = new PDO('mysql:host=localhost;dbname=projet_boissons;charset=utf8;', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+
+            /* ===== Recherche dans la table Recettes ===== */
+            $recetteBdd = 'SELECT * FROM Recettes WHERE idRecette = ?';
+            $recetteBddRequete = $bdd->prepare($recetteBdd);
+            $recetteBddRequete->execute(array($_GET['idRecette']));
+            $recette = $recetteBddRequete->fetch();
+        }
+        catch(PDOException $e)
+        {
+            die('Erreur : ' . $e->getMessage());
+        }
+    }
+    else
+        echo 'Pas de recette à afficher'; // TO DO : Afficher page erreur
 
 
+/**
+ * Enlève tous les accents d'une chaîne et remplace tous les espaces et les tirets par des underscores
+ */
+Function transforme_chaine($chaine)
+{
+    $string = strtr($chaine, ' -', '__'); // Remplacement des '-' et ' ' par des '_'
+    $string = preg_replace("#(.*)'(.*)#", "$1$2", $string); // Suppression de la 1ère apostrophe ' | preg_replace(regex, autreChaîne, chaîne) permet chercher un motif dans un chaîne et de le remplacer par une autre chaîne
+    $tableAccents =     array('À','Á','Â','à','Ä','Å','à','á','â','à','ä','å','Ò','Ó','Ô','Õ','Ö','Ø','ò','ó','ô','õ','ö','ø','È','É','Ê','Ë','è','é','ê','ë','Ç','ç','Ì','Í','Î','Ï','ì','í','î','ï','Ù','Ú','Û','Ü','ù','ú','û','ü','ÿ','Ñ','ñ');
+    $tableSansAccents = array('a','a','a','a','a','a','a','a','a','a','a','a','o','o','o','o','o','o','o','o','o','o','o','o','e','e','e','e','e','e','e','e','c','c','i','i','i','i','i','i','i','i','u','u','u','u','u','u','u','u','y','n','n');
+    $string = str_replace($tableAccents, $tableSansAccents, $string);
+    /* str_replace fait en gros la même chose que strtr, mais strtr fait une seule passe sur la chaîne et ne change que octet par octet.
+    Certains accents sont codés sur plusieurs octets donc on ne peut pas utiliser strtr. */
+    $string = ucfirst(strtolower($string)); // Met toute la chaîne en minuscule, puis la première lettre en majuscule
+
+    return $string;
+}
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>WeDrink | Recette : </title><!-- TO DO : Ajouter en php le titre de la recette -->
+    <title>WeDrink | Recette : <?php echo $recette['titre'] ?></title><!-- TO DO : Ajouter en php le titre de la recette -->
     <link rel="Stylesheet" href="Style/styleRecette.css" />
 </head>
 
@@ -23,26 +59,55 @@
 
     <!-- CONTENU -->
     <section>
-        <h1>Tequila Sunrise</h1><!--TO DO Mettre titre de la recette -->
+        <h1><?php echo $recette['titre'] ?></h1><!--TO DO Mettre titre de la recette -->
 
-        <!-- TO DO : Afficher photo du cocktail s'il y en a -->
+        <!-- PHOTO DU COCKTAIL (s'il y en a une) -->
+        <p>
+            <?php
+                /* Transformation du titre de la recette pour qu'il corresponde au format des noms des photos de cocktails 
+                ex : Black Velvet => Black_velvet, Piña Colada => Pina_colada */
+                $nomPhoto = transforme_chaine($recette['titre']); // On remplace toutes les occurences de ' ' et de '-' par un underscore '_' et on enlève les accents
+
+                /* Recherche d'un fichier correspondant au titre transformé */
+                $cheminDossierPhotos = 'Photos/';
+                if(is_dir($cheminDossierPhotos)) // Si le dossier existe
+                {
+                    if($dossierPhotos = opendir($cheminDossierPhotos))
+                    {
+                        while(($element = readdir($dossierPhotos)) !== false) // On parcourt les éléments du dossier
+                        {
+                            $infoFichier = pathinfo($element);
+                            if(strcmp($infoFichier['extension'], 'jpg') == 0 AND strcmp($infoFichier['filename'], $nomPhoto) == 0 AND strcmp($element, '.') != 0 AND strcmp($element, '..') != 0) // Si le fichier correspond à nomTransformé.jpg
+                            {
+                                echo '<img id="photoCocktail" src="' . $cheminDossierPhotos . $infoFichier['basename'] . '" alt="Photo du cocktail" title="' . $recette['titre'] . '" />';
+                            }
+                        }
+                        closedir($dossierPhotos);
+                    }
+                }
+            ?>
+        </p>
 
         <!-- RECETTE -->
         <article>
             <div id=composition>
                 <h2>Composition</h2>
                 <ul id="listeIngredients">
-                    <li>10 cL de jus de betterave</li>
-                    <li>1 L de tequila</li>
-                    <li>du soleil</li>
+                    <?php
+                        foreach(explode('|', $recette['composition']) as $compoIngredient)
+                        {
+                            echo '<li>' . $compoIngredient . '</li>';
+                        }
+                    ?>
                 </ul>
             </div>
 
             <div id="preparation">
                 <h2>Préparation</h2>
                 <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore aliquid architecto deleniti quibusdam fugiat quo veniam voluptas necessitatibus praesentium aliquam quisquam consequatur quod qui repellendus reiciendis, velit et, obcaecati quasi?
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi quasi dicta fugit labore ipsa magnam autem vel nostrum dolorem? Assumenda dolore cumque sequi. Facere quod tempora tempore sint ipsum suscipit.
+                    <?php
+                            echo nl2br($recette['preparation']); // nl2br remplace tous les passages à la ligne par des balise <br /> en HTML
+                    ?>
                 </p>
             </div>
         </article>

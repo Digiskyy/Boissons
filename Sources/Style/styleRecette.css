@@ -73,3 +73,10 @@ article h2
 {
     margin: 1.5em;
 }
+
+#photoCocktail
+{
+    padding: 0;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px #003366;
+}
