@@ -1,0 +1,24 @@
+/* Polices d'éccriture */
+@font-face
+{
+    font-family: 'Open Sans';
+    src: url(../Polices/OpenSans-Regular.ttf) format('truetype'); 
+}
+
+@font-face
+{
+    font-family: 'Open Sans Light';
+    src: url(../Polices/OpenSans-Light.ttf) format('truetype'); 
+}
+
+@font-face
+{
+    font-family: 'Chapaza';
+    src: url(../Polices/Chapaza.ttf) format('truetype'); 
+}
+
+
+body
+{
+    background-color: rgb(224, 250, 255);
+}

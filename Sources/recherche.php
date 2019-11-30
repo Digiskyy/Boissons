@@ -85,8 +85,29 @@
 <head>
     <meta charset="utf-8" />
     <title>WeDrink | Recherche</title>
+    <link rel="Stylesheet" href="Style/styleRecette.css" />
 </head>
 
 <body>
+    <!-- EN-TETE -->
+    <header>
+        <!-- TO DO : Mettre logo du site, menu : mode connecté sinon connexion, inscription -->
+    </header>
+
+    <!-- CONTENU -->
+    <section>
+        <!-- Recherche des recettes correspondant à la recherche -->
+        <h1>Des recettes</h1>
+        <article>
+            
+        </article>
+    </section>
+    <section>
+        <!-- Recherche des recettes correspondant à la recherche -->
+        <h1>Des aliments</h1>
+        <article>
+            
+        </article>
+    </section>
 </body>
 </html>
