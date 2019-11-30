@@ -1,0 +1,75 @@
+/* Polices d'éccriture */
+@font-face
+{
+    font-family: 'Open Sans';
+    src: url(../Polices/OpenSans-Regular.ttf) format('truetype'); 
+}
+
+@font-face
+{
+    font-family: 'Open Sans Light';
+    src: url(../Polices/OpenSans-Light.ttf) format('truetype'); 
+}
+
+@font-face
+{
+    font-family: 'Chapaza';
+    src: url(../Polices/Chapaza.ttf) format('truetype'); 
+}
+
+
+body
+{
+    background-color: rgb(224, 250, 255);
+}
+section
+{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+
+section h1
+{
+    font-family: 'Chapaza', 'Open Sans', 'Helevetica', serif;
+    font-size: 3.5em;
+    color: #003366;
+}
+
+article
+{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: justify;
+    font-family: 'Open Sans', 'Helevetica', sans-serif;
+    font-size: 1em;
+}
+
+
+article h2
+{
+    font-family: 'Open Sans Light', 'Open Sans', 'Helevetica', sans-serif;
+    font-size: 1.8em;
+    color: #014a4e;
+}
+
+#composition, #preparation
+{
+    padding: 0em 1em;
+    margin: 1em 0em;
+    background-color: rgb(255, 235, 221);
+    border-radius: 25px;
+}
+
+#preparation p
+{
+    margin: 1.5em;
+}
