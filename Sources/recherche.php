@@ -79,3 +79,14 @@
     echo 'Pas de recherche effectuée';
  }
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>WeDrink | Recherche</title>
+</head>
+
+<body>
+</body>
+</html>

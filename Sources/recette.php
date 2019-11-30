@@ -3,26 +3,29 @@
  * Cette page affichera tous les éléments constituant la recette demandée par la méthode GET de la recherche
  */
 
-    if(isset($_GET['idRecette']))
+ $noError = true;
+if(isset($_GET['idRecette']))
+{
+    try
     {
-        try
-        {
-            /* ===== Connexion à la base de données ===== */
-            $bdd = new PDO('mysql:host=localhost;dbname=projet_boissons;charset=utf8;', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        /* ===== Connexion à la base de données ===== */
+        $bdd = new PDO('mysql:host=localhost;dbname=projet_boissons;charset=utf8;', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
-            /* ===== Recherche dans la table Recettes ===== */
-            $recetteBdd = 'SELECT * FROM Recettes WHERE idRecette = ?';
-            $recetteBddRequete = $bdd->prepare($recetteBdd);
-            $recetteBddRequete->execute(array($_GET['idRecette']));
-            $recette = $recetteBddRequete->fetch();
-        }
-        catch(PDOException $e)
-        {
-            die('Erreur : ' . $e->getMessage());
-        }
+        /* ===== Recherche dans la table Recettes ===== */
+        $recetteBdd = 'SELECT * FROM Recettes WHERE idRecette = ?';
+        $recetteBddRequete = $bdd->prepare($recetteBdd);
+        $recetteBddRequete->execute(array($_GET['idRecette']));
+        $recette = $recetteBddRequete->fetch();
     }
-    else
-        echo 'Pas de recette à afficher'; // TO DO : Afficher page erreur
+    catch(PDOException $e)
+    {
+        die('Erreur : ' . $e->getMessage());
+    }
+}
+else
+{
+    $noError = false; // TO DO : Afficher page erreur
+}
 
 
 /**
@@ -47,7 +50,7 @@ Function transforme_chaine($chaine)
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>WeDrink | Recette : <?php echo $recette['titre'] ?></title><!-- TO DO : Ajouter en php le titre de la recette -->
+    <title>WeDrink | Recette<?php if($noError) echo ' : ' . $recette['titre']; ?></title><!-- TO DO : Ajouter en php le titre de la recette -->
     <link rel="Stylesheet" href="Style/styleRecette.css" />
 </head>
 
@@ -59,11 +62,13 @@ Function transforme_chaine($chaine)
 
     <!-- CONTENU -->
     <section>
-        <h1><?php echo $recette['titre'] ?></h1><!--TO DO Mettre titre de la recette -->
+        <h1><?php if($noError) echo $recette['titre']; else echo 'Aucune recette trouvée'; ?></h1><!--TO DO Mettre titre de la recette -->
 
         <!-- PHOTO DU COCKTAIL (s'il y en a une) -->
         <p>
             <?php
+            if($noError)
+            {
                 /* Transformation du titre de la recette pour qu'il corresponde au format des noms des photos de cocktails 
                 ex : Black Velvet => Black_velvet, Piña Colada => Pina_colada */
                 $nomPhoto = transforme_chaine($recette['titre']); // On remplace toutes les occurences de ' ' et de '-' par un underscore '_' et on enlève les accents
@@ -85,31 +90,34 @@ Function transforme_chaine($chaine)
                         closedir($dossierPhotos);
                     }
                 }
+            }
             ?>
         </p>
 
         <!-- RECETTE -->
         <article>
-            <div id=composition>
-                <h2>Composition</h2>
-                <ul id="listeIngredients">
-                    <?php
-                        foreach(explode('|', $recette['composition']) as $compoIngredient)
-                        {
-                            echo '<li>' . $compoIngredient . '</li>';
-                        }
-                    ?>
-                </ul>
-            </div>
+            <?php if($noError) {?>
+                <div id=composition>
+                    <h2>Composition</h2>
+                    <ul id="listeIngredients">
+                        <?php
+                            foreach(explode('|', $recette['composition']) as $compoIngredient)
+                            {
+                                echo '<li>' . $compoIngredient . '</li>';
+                            }
+                        ?>
+                    </ul>
+                </div>
 
-            <div id="preparation">
-                <h2>Préparation</h2>
-                <p>
-                    <?php
-                            echo nl2br($recette['preparation']); // nl2br remplace tous les passages à la ligne par des balise <br /> en HTML
-                    ?>
-                </p>
-            </div>
+                <div id="preparation">
+                    <h2>Préparation</h2>
+                    <p>
+                        <?php
+                                echo nl2br($recette['preparation']); // nl2br remplace tous les passages à la ligne par des balise <br /> en HTML
+                        ?>
+                    </p>
+                </div>
+            <?php } else echo '<a href="index.html" title="Retourner vers la page principale">Page principale</a>';?>
         </article>
 
         <!-- Aside à voir si on met en fixe le titre, une photo en petit si y'a et la liste des ingrédients -->

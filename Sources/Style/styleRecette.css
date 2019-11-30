@@ -22,6 +22,18 @@ body
 {
     background-color: rgb(224, 250, 255);
 }
+
+a
+{
+    color: #014a4e;
+    text-decoration: none;
+}
+a:hover
+{
+    color: #660000;
+    font-weight: bold;
+}
+
 section
 {
     display: flex;
