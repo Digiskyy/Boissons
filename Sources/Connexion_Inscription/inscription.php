@@ -1,3 +1,7 @@
+<!-- TO DO : Faire en sorte d'afficher un message quand il y a une erreur dans le formulaire et que la page est rechargée (ex: 2 mots de passe différents. etc.)
+A faire avec SESSION je pense -->
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />

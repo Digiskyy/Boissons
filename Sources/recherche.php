@@ -7,9 +7,10 @@
  *               => pour obtenir les recettes où cet aliment est présent
  */
 
- if(isset($_GET['recherche'])) // Si l'utilisateur a fait une recherche
- {
-     $recherche = $_GET['recherche'];
+$noError = true;
+if(isset($_GET['recherche'])) // Si l'utilisateur a fait une recherche
+{
+    $recherche = $_GET['recherche'];
     try
     {
         /* ===== Connexion à la base de données ===== */
@@ -25,19 +26,6 @@
         $rechercheRecettesRequete = $bdd->prepare($rechercheRecettes);
         $rechercheRecettesRequete->execute(array('%' . $recherche . '%')); // % dans une clause LIKE veut dire 0 ou 1 ou plusieurs caractères (LIKE ne prend pas de regex)
 
-        echo 'Recettes correspondantes au motif entré :<br />';
-        if($recetteParRecette = $rechercheRecettesRequete->fetch()) // Si la recherche n'est pas vide
-        {
-            do
-            {
-                echo 'idRecette = ' . $recetteParRecette['idRecette'] . ' | titre = ' . htmlspecialchars($recetteParRecette['titre']) . '<br />';
-            } while($recetteParRecette = $rechercheRecettesRequete->fetch());
-        }
-        else // Pas de recettes trouvée dans la table Recettes
-        {
-            echo 'Pas de recettes dont le titre ressemble au mot entré<br />';
-        }
-
         /* Recherche de toutes les recettes dont un ou plusieurs ingrédients correspondent au mot (ou une partie du mot) entré */
         $rechercheIngredients = 'SELECT *
                                 FROM Recettes
@@ -49,19 +37,6 @@
         $rechercheIngredientsRequete = $bdd->prepare($rechercheIngredients);
         $rechercheIngredientsRequete->execute(array('%' . $recherche . '%', '%' . $recherche . '%'));
 
-        echo '<br />Recettes dont les ingrédients correspondent au motif entré :<br />';
-        if($recetteParIngredient = $rechercheIngredientsRequete->fetch()) // Si la recherche n'est pas vide
-        {
-            do
-            {
-                echo 'idRecette = ' . $recetteParIngredient['idRecette'] . ' | titre = ' . htmlspecialchars($recetteParIngredient['titre']) . '<br />';
-            } while($recetteParIngredient = $rechercheIngredientsRequete->fetch());
-        }
-        else // Pas de recette trouvée dans la table Recettes
-        {
-            echo 'Pas de recettes dont un ingrédient ressemble au mot entré<br />';
-        }
-
         /* ===== Recherche dans la table Aliments ===== */
         // Faire recherche pour les sous-catégories et une autre pour les autres super-catégories
 
@@ -72,12 +47,13 @@
         die('Erreur : ' . $e->getMessage());
     }
 
- }
- else
- {
-    // TO DO : Afficher la 1ère page normale et le resultat de la recherche s'il y en a en-dessous ou inclure ce fichier dans la partie <main> du index.html
+}
+else
+{
+    $noError = false;
+    // TO DO : Afficher la 1ère page normale et le résultat de la recherche s'il y en a en-dessous ou inclure ce fichier dans la partie <main> du index.html
     echo 'Pas de recherche effectuée';
- }
+}
 ?>
 
 <!DOCTYPE html>
@@ -85,7 +61,7 @@
 <head>
     <meta charset="utf-8" />
     <title>WeDrink | Recherche</title>
-    <link rel="Stylesheet" href="Style/styleRecette.css" />
+    <link rel="Stylesheet" href="Style/styleRecherche.css" />
 </head>
 
 <body>
@@ -95,19 +71,55 @@
     </header>
 
     <!-- CONTENU -->
-    <section>
-        <!-- Recherche des recettes correspondant à la recherche -->
-        <h1>Des recettes</h1>
-        <article>
-            
-        </article>
-    </section>
-    <section>
-        <!-- Recherche des recettes correspondant à la recherche -->
-        <h1>Des aliments</h1>
-        <article>
-            
-        </article>
-    </section>
+    <main>
+        <section>
+            <!-- Recettes -->
+            <h1>Des recettes</h1>
+            <article>
+                <h2>Recettes correspondantes à votre recherche</h2>
+                <?php
+                if($recetteParRecette = $rechercheRecettesRequete->fetch()) // Si la recherche n'est pas vide
+                {
+                    echo '<ul class="listeResultats">';
+                    do
+                    {
+                        echo '<li><a href="recette.php?idRecette=' . htmlspecialchars($recetteParRecette['idRecette']) . '" title="Aller à la recette ' . htmlspecialchars($recetteParRecette['titre']) . '">' . htmlspecialchars($recetteParRecette['titre']) . '</a></li>';
+                    } while($recetteParRecette = $rechercheRecettesRequete->fetch());
+                    echo '</ul>';
+                }
+                else // Pas de recettes trouvée dans la table Recettes
+                {
+                    echo '<p class="erreur">Pas de recettes dont le titre ressemble au mot entré</p>';
+                }
+                ?>
+            </article>
+
+            <article>
+                <h2>Recettes comportants des aliments correspondants à votre recherche</h2>
+                <?php
+                if($recetteParIngredient = $rechercheIngredientsRequete->fetch()) // Si la recherche n'est pas vide
+                {
+                    echo '<ul class="listeResultats">';
+                    do
+                    {
+                        echo '<li><a href="recette.php?idRecette=' . htmlspecialchars($recetteParIngredient['idRecette']) . '" title="Aller à la recette ' . htmlspecialchars($recetteParRecette['titre']) . '">' . htmlspecialchars($recetteParIngredient['titre']) . '</a></li>';
+                    } while($recetteParIngredient = $rechercheIngredientsRequete->fetch());
+                    echo '</ul>';
+                }
+                else // Pas de recette trouvée dans la table Recettes
+                {
+                    echo '<p class="erreur">Pas de recettes dont un ingrédient ressemble au mot entré</p>';
+                }
+                ?>
+            </article>
+        </section>
+        <section>
+            <!-- Aliments -->
+            <h1>Des aliments</h1>
+            <article>
+                
+            </article>
+        </section>
+    </main>
 </body>
 </html>

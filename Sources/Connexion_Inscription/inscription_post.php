@@ -48,14 +48,18 @@ if(isset($_POST['pseudo'])
             }
 
             /* Redirection vers la page de connexion */
-            header('Location: connexion.php'); // TO DO : Afficher un message sur la page de connexion informant que le compte est bien enregistré
+            header('Location: connexion.php');
+            
+            // TO DO : Afficher un message sur la page de connexion informant que le compte est bien enregistré
         }
         else
         {
             // echo 'Les deux mots de passe ne correspondent pas.<br />';
 
             /* Redirection vers la page d'inscription */
-            header('Location: inscription.php'); // TO DO : Afficher un message expliquant l'erreur
+            header('Location: inscription.php');
+            
+            // TO DO : Afficher un message expliquant l'erreur
         }
     }
     else
@@ -63,7 +67,9 @@ if(isset($_POST['pseudo'])
         // echo 'Le pseudo et le mot de passe doivent contenir au minimum 2 lettres.<br />';
 
         /* Redirection vers la page d'inscription */
-        header('Location: inscription.php'); // TO DO : Afficher un message expliquant l'erreur
+        header('Location: inscription.php');
+        
+        // TO DO : Afficher un message expliquant l'erreur
     }
 }
 else
@@ -71,9 +77,10 @@ else
     //echo 'Le pseudo, le mot de passe et sa confirmation sont à remplir obligatoirement.<br />';
 
     /* Redirection vers la page d'inscription */
-    header('Location: inscription.php'); // TO DO : Afficher un message expliquant l'erreur
+    header('Location: inscription.php');
+    
+    // TO DO : Afficher un message expliquant l'erreur
 }
-
 
 
 

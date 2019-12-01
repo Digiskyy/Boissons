@@ -28,6 +28,7 @@ a
     color: #014a4e;
     text-decoration: none;
 }
+
 a:hover
 {
     color: #660000;
@@ -75,7 +76,7 @@ article h2
 
 #composition, #preparation
 {
-    padding: 0em 1em;
+    padding: 0em 1.5em;
     margin: 1em 0em;
     background-color: rgb(255, 235, 221);
     border-radius: 25px;

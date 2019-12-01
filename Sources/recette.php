@@ -16,6 +16,9 @@ if(isset($_GET['idRecette']))
         $recetteBddRequete = $bdd->prepare($recetteBdd);
         $recetteBddRequete->execute(array($_GET['idRecette']));
         $recette = $recetteBddRequete->fetch();
+
+        if(empty($recette)) // Si pas de recettes correspondantes à idRecette trouvée
+            $noError = false;
     }
     catch(PDOException $e)
     {

@@ -26,11 +26,15 @@ if(isset($_POST['pseudo']) AND isset($_POST['mdp']))
             else
             {
                 echo 'Le mot de passe et le pseudo ne correspondent pas.<br />';
+
+                // TO DO : Recharger la page et afficher un message => le faire avec $_SESSION je pense
             }
         }
         else
         {
             echo 'Le pseudo ne correspond à aucun compte enregistré.<br />';
+
+            // TO DO : Recharger la page et afficher un message => le faire avec $_SESSION je pense
         }
 
         $requeteId->closeCursor();
@@ -43,6 +47,8 @@ if(isset($_POST['pseudo']) AND isset($_POST['mdp']))
 else
 {
     echo 'Erreur : Pas de mot de passe ou de pseudo remplis<br />';
+
+    // TO DO : Recharger la page et afficher un message => le faire avec $_SESSION je pense
 }
 
 ?>
