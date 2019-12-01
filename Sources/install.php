@@ -6,7 +6,7 @@
 	echo 'Création de la base de données et de ses tables<br />';
 	try
 	{
-		$bdd= new PDO('mysql:host=localhost;charset=utf8', USER, '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+		$bdd= new PDO('mysql:host=127.0.0.1;charset=utf8', USER, '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 		$creation = 'DROP DATABASE IF EXISTS projet_boissons ;
 					CREATE DATABASE IF NOT EXISTS projet_boissons ;
 					USE projet_boissons ;

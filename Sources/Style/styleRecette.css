@@ -93,3 +93,9 @@ article h2
     border-radius: 10px;
     box-shadow: 0px 0px 15px #003366;
 }
+
+#ajout
+{
+    background-color: #003366;
+    color: #fff;
+}

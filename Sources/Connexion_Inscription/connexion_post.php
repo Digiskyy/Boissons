@@ -8,7 +8,7 @@ if(isset($_POST['pseudo']) AND isset($_POST['mdp']))
         $mdpConnexion = $_POST['mdp'];
 
         /* Connexion à la base de données */
-        $bdd = new PDO('mysql:host=localhost;dbname=projet_boissons;charset=utf8;', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd = new PDO('mysql:host=127.0.0.1;dbname=projet_boissons;charset=utf8;', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
         /* Récupération du mot de passe dans la BDD correspondant au pseudo écrit par l'utilisateur */
         $requeteId = $bdd->prepare('SELECT mdp FROM Utilisateurs WHERE pseudo = ?;'); // Une seule ligne renvoyée au max. car pseudo unique dans la bdd
@@ -19,7 +19,11 @@ if(isset($_POST['pseudo']) AND isset($_POST['mdp']))
         {
             if(strcmp($mdpBDD['mdp'], $mdpConnexion) == 0) // Si les mots de passe correspondent
             {
-                echo 'Vous êtes connecté.<br />';
+                //echo 'Vous êtes connecté.<br />';
+                session_start();
+                $_SESSION["newsession"] = $pseudoConnexion;
+                //variable newsession qui sera vérifiée au moment d'ouvrir la page d'accueil
+                header('Location: ../index.php');
 
                 // TO DO : Rediriger sur la 1ère page mais en mode connecté (Compte, Recettes favorites, ... à la place de connexion Inscription)
             }

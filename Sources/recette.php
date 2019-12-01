@@ -9,7 +9,7 @@ if(isset($_GET['idRecette']))
     try
     {
         /* ===== Connexion à la base de données ===== */
-        $bdd = new PDO('mysql:host=localhost;dbname=projet_boissons;charset=utf8;', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd = new PDO('mysql:host=127.0.0.1;dbname=projet_boissons;charset=utf8;', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
         /* ===== Recherche dans la table Recettes ===== */
         $recetteBdd = 'SELECT * FROM Recettes WHERE idRecette = ?';
@@ -47,6 +47,12 @@ Function transforme_chaine($chaine)
 
     return $string;
 }
+
+/*Function save_favoris($recette)
+{
+
+}*/
+
 ?>
 
 <!DOCTYPE html>
@@ -65,7 +71,12 @@ Function transforme_chaine($chaine)
 
     <!-- CONTENU -->
     <section>
-        <h1><?php if($noError) echo $recette['titre']; else echo 'Aucune recette trouvée'; ?></h1><!--TO DO Mettre titre de la recette -->
+        <h1><?php   if($noError) 
+                        echo $recette['titre'];
+                    else echo 'Aucune recette trouvée'; ?>    
+        </h1><!--TO DO Mettre titre de la recette -->
+
+        <button id=ajout type="button">Ajouter aux recettes favorites</button>
 
         <!-- PHOTO DU COCKTAIL (s'il y en a une) -->
         <p>

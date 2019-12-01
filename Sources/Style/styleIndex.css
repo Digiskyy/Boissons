@@ -64,6 +64,11 @@ header
     margin-left: 10%;
 }
 
+.favoris
+{
+    margin-left: 10%;
+}
+
 a:link, a:visited
 {
     background-color: #02C8A7;

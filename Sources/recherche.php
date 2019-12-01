@@ -5,7 +5,7 @@
  *  - un nom de coktail => pour voir avoir sa recette, sa composition, son image s'il y en a une, (d'autres recettes avec les mêmes aliments), ...
  *  - un aliment => pour obtenir ses sous-catégories et ses super-catégories (ex: orange : sous = orange sanguine, ... et super = agrumes, ...)
  *               => pour obtenir les recettes où cet aliment est présent
- */
+ */ 
 
 $noError = true;
 if(isset($_GET['recherche'])) // Si l'utilisateur a fait une recherche
@@ -14,7 +14,7 @@ if(isset($_GET['recherche'])) // Si l'utilisateur a fait une recherche
     try
     {
         /* ===== Connexion à la base de données ===== */
-        $bdd = new PDO('mysql:host=localhost;dbname=projet_boissons;charset=utf8;', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd = new PDO('mysql:host=127.0.0.1;dbname=projet_boissons;charset=utf8;', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
         /* ===== Recherche dans la table Recettes ===== */
 
@@ -77,6 +77,7 @@ else
             <h1>Des recettes</h1>
             <article>
                 <h2>Recettes correspondantes à votre recherche</h2>
+
                 <?php
                 if($recetteParRecette = $rechercheRecettesRequete->fetch()) // Si la recherche n'est pas vide
                 {
