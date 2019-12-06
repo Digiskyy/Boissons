@@ -22,9 +22,9 @@ if(isset($_GET['recherche'])) // Si l'utilisateur a fait une recherche
         $rechercheRecettes = 'SELECT *
                             FROM Recettes
                             WHERE LOWER(titre) LIKE LOWER(?)
-                            ORDER BY titre asc;';
+                            ORDER BY titre ASC;';
         $rechercheRecettesRequete = $bdd->prepare($rechercheRecettes);
-        $rechercheRecettesRequete->execute(array('%' . $recherche . '%')); // % dans une clause LIKE veut dire 0 ou 1 ou plusieurs caractères (LIKE ne prend pas de regex)
+        $rechercheRecettesRequete->execute(array('%' . htmlspecialchars($recherche) . '%')); // % dans une clause LIKE veut dire 0 ou 1 ou plusieurs caractères (LIKE ne prend pas de regex)
 
         /* Recherche de toutes les recettes dont un ou plusieurs ingrédients correspondent au mot (ou une partie du mot) entré */
         $rechercheIngredients = 'SELECT *
@@ -33,11 +33,20 @@ if(isset($_GET['recherche'])) // Si l'utilisateur a fait une recherche
                                 INNER JOIN Aliments ON Constitution.idAliment = Aliments.idAliment
                                 WHERE LOWER(nomAliment) LIKE LOWER(?) AND LOWER(titre) NOT LIKE LOWER(?)
                                 GROUP BY titre
-                                ORDER BY titre ASC;'; // TO DO : Mettre LIMIT x,x pour limiter le nombre de résultat et en faire plusieurs "pages" // On met la clause NOT LIKE pour ne pas remettre les recettes de la requête précédente
+                                ORDER BY titre ASC;'; // TODO: Mettre LIMIT x,x pour limiter le nombre de résultat et en faire plusieurs "pages" // On met la clause NOT LIKE pour ne pas remettre les recettes de la requête précédente
         $rechercheIngredientsRequete = $bdd->prepare($rechercheIngredients);
-        $rechercheIngredientsRequete->execute(array('%' . $recherche . '%', '%' . $recherche . '%'));
+        $rechercheIngredientsRequete->execute(array('%' . htmlspecialchars($recherche) . '%', '%' . htmlspecialchars($recherche) . '%'));
 
         /* ===== Recherche dans la table Aliments ===== */
+
+        /* Recherche de tous les aliments contenant le mot ou (la partie du mot) entré */
+        $rechercheAliments = 'SELECT * 
+                                FROM Aliments
+                                WHERE LOWER(nomAliment) LIKE LOWER(?)
+                                ORDER BY nomAliment ASC;';
+        $rechercheAlimentsRequete = $bdd->prepare($rechercheAliments);
+        $rechercheAlimentsRequete->execute(array('%' . htmlspecialchars($recherche) . '%'));
+
         // Faire recherche pour les sous-catégories et une autre pour les autres super-catégories
 
         // Si les deux recherches ne donnent aucun résultat, afficher un message sur la page
@@ -51,7 +60,7 @@ if(isset($_GET['recherche'])) // Si l'utilisateur a fait une recherche
 else
 {
     $noError = false;
-    // TO DO : Afficher la 1ère page normale et le résultat de la recherche s'il y en a en-dessous ou inclure ce fichier dans la partie <main> du index.html
+    // TODO: Afficher la 1ère page normale et le résultat de la recherche s'il y en a en-dessous ou inclure ce fichier dans la partie <main> du index.html
     echo 'Pas de recherche effectuée';
 }
 ?>
@@ -67,7 +76,7 @@ else
 <body>
     <!-- EN-TETE -->
     <header>
-        <!-- TO DO : Mettre logo du site, menu : mode connecté sinon connexion, inscription -->
+        <!-- TODO: Mettre logo du site, menu : mode connecté sinon connexion, inscription -->
     </header>
 
     <!-- CONTENU -->
@@ -118,7 +127,22 @@ else
             <!-- Aliments -->
             <h1>Des aliments</h1>
             <article>
-                
+                <h2>Aliments correspondants à votre recherche</h2>
+                <?php
+                if($aliments = $rechercheAlimentsRequete->fetch())
+                {
+                    echo '<ul class="listeResultats">';
+                    do
+                    {
+                        echo '<li><a href="recherche.php?recherche=' . $aliments['nomAliment'] . '" title="Rechercher ' . $aliments['nomAliment'] . '">' . $aliments['nomAliment'] . '<a/></li>';
+                    } while($aliments = $rechercheAlimentsRequete->fetch());
+                    echo '<ul>';
+                }
+                else
+                {
+                    echo '<p class="erreur">Aucun aliment ne correspond à votre recherche</p>';
+                }
+                ?>
             </article>
         </section>
     </main>
