@@ -21,6 +21,8 @@
 body
 {
     background-color: rgb(224, 250, 255);
+    font-family: 'Open Sans', 'Helevetica', sans-serif;
+    font-size: 1em;
 }
 
 a
@@ -42,8 +44,6 @@ main
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: right;
-    font-family: 'Open Sans', 'Helevetica', sans-serif;
-    font-size: 1em;
     width: 80%;
     margin: auto;
 }
@@ -91,4 +91,25 @@ article ul, article p
 li
 {
     margin: 5px;
+}
+
+footer
+{
+    font-family: 'Open Sans Light', 'Open Sans', 'Helvetica', sans-serif;
+    text-align: center;
+}
+
+#lien_page_principale
+{
+    color: rgb(255, 160, 72);
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+#lien_page_principale:hover
+{
+    color: rgb(255, 100, 28);
+    background-color: rgb(255, 235, 221);
+    font-weight: normal;
 }

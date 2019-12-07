@@ -8,7 +8,8 @@
 	<body>
 	    <!-- EN-TETE -->
 	    <header>
-	        <img class="picBandeau" src="../Images/bandeau.png" alt="Bandeau">
+		<a href="../index.php" title="Revenir à la page principale"><img class="picBandeau" src="../Images/bandeau.png" alt="Bandeau"></a>
+			<!-- TODO: Faire en sorte que l'image soit juste le log et pas tout le bandeau et créer le bandeau en CSS plutôt -->
 	    </header>
 	    
 	    <!-- CONTENU -->

@@ -12,7 +12,8 @@ A faire avec SESSION je pense -->
 <body>
     <!-- EN-TETE -->
     <header>
-        <img id="picBandeau" src="../Images/bandeau.png" alt="Bandeau">
+        <a href="../index.php" title="Revenir à la page principale"><img id="picBandeau" src="../Images/bandeau.png" alt="Bandeau"></a>
+        <!-- TODO: Faire en sorte que l'image soit juste le log et pas tout le bandeau et créer le bandeau en CSS plutôt -->
     </header>
     
     <!-- CONTENU -->

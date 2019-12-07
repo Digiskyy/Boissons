@@ -146,5 +146,8 @@ else
             </article>
         </section>
     </main>
+    <footer>
+        <p><a href="index.php" id="lien_page_principale">Revenir à la page principale</a></p>
+    </footer>
 </body>
 </html>

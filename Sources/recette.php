@@ -27,7 +27,7 @@ if(isset($_GET['idRecette']))
 }
 else
 {
-    $noError = false; // TO DO : Afficher page erreur
+    $noError = false; // TODO: Afficher page erreur
 }
 
 
@@ -59,14 +59,14 @@ Function transforme_chaine($chaine)
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>WeDrink | Recette<?php if($noError) echo ' : ' . $recette['titre']; ?></title><!-- TO DO : Ajouter en php le titre de la recette -->
+    <title>WeDrink | Recette<?php if($noError) echo ' : ' . $recette['titre']; ?></title><!-- TODO: Ajouter en php le titre de la recette -->
     <link rel="Stylesheet" href="Style/styleRecette.css" />
 </head>
 
 <body>
     <!-- EN-TETE -->
     <header>
-        <!-- TO DO : Mettre logo du site, menu : mode connecté sinon connexion, inscription -->
+        <!-- TODO: Mettre logo du site, menu : mode connecté sinon connexion, inscription -->
     </header>
 
     <!-- CONTENU -->
@@ -139,7 +139,7 @@ Function transforme_chaine($chaine)
 
     <!-- PIED DE PAGE -->
     <footer>
-
+        <p><a href="index.php" id="lien_page_principale">Revenir à la page principale</a></p>
     </footer>
 </body>
 </html>

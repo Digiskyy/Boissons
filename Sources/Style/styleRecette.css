@@ -99,3 +99,25 @@ article h2
     background-color: #003366;
     color: #fff;
 }
+
+footer
+{
+    font-family: 'Open Sans Light', 'Open Sans', 'Helvetica', sans-serif;
+    text-align: center;
+}
+
+#lien_page_principale
+{
+    color: #0059b3;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+#lien_page_principale:hover
+{
+    color: rgb(224, 250, 255);
+    background-image: linear-gradient(to top right, #003366, #0078ef);
+    /*background-color: #0059b3;*/
+    font-weight: normal;
+}
