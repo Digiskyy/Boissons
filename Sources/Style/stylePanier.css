@@ -17,7 +17,6 @@
     src: url(../Polices/Chapaza.ttf) format('truetype'); 
 }
 
-
 body
 {
     background-color: rgb(224, 250, 255);
@@ -29,12 +28,14 @@ a
 {
     color: #014a4e;
     text-decoration: none;
+    padding: 2px 8px;
+    border-radius: 10px;
 }
 
 a:hover
 {
-    color: #660000;
-    font-weight: bold;
+    color: #fff;
+    background-color: #003366;
 }
 
 section
@@ -58,63 +59,33 @@ section h1
 
 article
 {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    text-align: justify;
     font-family: 'Open Sans', 'Helevetica', sans-serif;
     font-size: 1em;
 }
 
-
-article h2
+#supprimer
 {
-    font-family: 'Open Sans Light', 'Open Sans', 'Helevetica', sans-serif;
-    font-size: 1.8em;
-    color: #014a4e;
+    color: red;
+    font-weight: bold;
+    padding: 1px 6px;
+    margin: 2px;
+    border-radius: 20px;
+    border: 1px rgb(224, 250, 255) solid;
 }
 
-#composition, #preparation
+#supprimer:hover
 {
-    padding: 0em 1.5em;
-    margin: 1em 0em;
-    background-color: rgb(255, 235, 221);
-    border-radius: 25px;
-}
-
-#preparation p
-{
-    margin: 1.5em;
-}
-
-#photoCocktail
-{
-    padding: 0;
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px #003366;
-}
-
-#ajoutPanier
-{
-    font-size: 1.2em;
-    color: #1088ff;
-    padding: 5px;
-    border-radius: 10px;
-}
-
-#ajoutPanier:hover
-{
-    background-color: #2338b8;
     color: #fff;
-    font-weight: normal;
+    background-color: rgb(255, 128, 128);
+    border: 1px red solid;
 }
+
 
 footer
 {
     font-family: 'Open Sans Light', 'Open Sans', 'Helvetica', sans-serif;
     text-align: center;
+    margin-top: 20px;
 }
 
 #lien_page_principale

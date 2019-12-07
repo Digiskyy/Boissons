@@ -76,7 +76,7 @@ Function transforme_chaine($chaine)
                     else echo 'Aucune recette trouvée'; ?>    
         </h1><!--TO DO Mettre titre de la recette -->
 
-        <button id=ajout type="button">Ajouter aux recettes favorites</button>
+        <?php echo '<a href="panier.php?action=ajout&amp;idRecette=' . rawurlencode($recette['idRecette']) . '&amp;titre=' . rawurlencode($recette['titre']) .'" id="ajoutPanier">Ajouter au panier</a>'; /*   onclick="window.open(this.href, \'\', \'toolbar=no, location=no, directories=no, status=yes, scrollbars=yes, resizable=yes, copyhistory=no, width=600, height=350\'); return false;" */ ?>
 
         <!-- PHOTO DU COCKTAIL (s'il y en a une) -->
         <p>
@@ -131,7 +131,7 @@ Function transforme_chaine($chaine)
                         ?>
                     </p>
                 </div>
-            <?php } else echo '<a href="index.html" title="Retourner vers la page principale">Page principale</a>';?>
+            <?php } ?>
         </article>
 
         <!-- Aside à voir si on met en fixe le titre, une photo en petit si y'a et la liste des ingrédients -->

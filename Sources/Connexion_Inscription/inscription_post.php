@@ -11,7 +11,7 @@ if(isset($_POST['pseudo'])
     $mdp = securise_chaine($_POST['mdp']);
     $mdpConf = securise_chaine($_POST['mdpConf']);
 
-    // TO DO : Quand il y a des erreurs lors de la validation du formulaire, recharger la page et afficher les messages correspondants
+    // TODO: Quand il y a des erreurs lors de la validation du formulaire, recharger la page et afficher les messages correspondants
 
     if(strlen($pseudo) > 1 // Pseudo doit avoir minimum 2 lettres
         AND strlen($mdp) > 1) // Mot de passe minimum 2 lettres
@@ -50,7 +50,7 @@ if(isset($_POST['pseudo'])
             /* Redirection vers la page de connexion */
             header('Location: connexion.php');
             
-            // TO DO : Afficher un message sur la page de connexion informant que le compte est bien enregistré
+            // TODO: Afficher un message sur la page de connexion informant que le compte est bien enregistré
         }
         else
         {
@@ -59,7 +59,7 @@ if(isset($_POST['pseudo'])
             /* Redirection vers la page d'inscription */
             header('Location: inscription.php');
             
-            // TO DO : Afficher un message expliquant l'erreur
+            // TODO: Afficher un message expliquant l'erreur
         }
     }
     else
@@ -69,7 +69,7 @@ if(isset($_POST['pseudo'])
         /* Redirection vers la page d'inscription */
         header('Location: inscription.php');
         
-        // TO DO : Afficher un message expliquant l'erreur
+        // TODO: Afficher un message expliquant l'erreur
     }
 }
 else
@@ -79,7 +79,7 @@ else
     /* Redirection vers la page d'inscription */
     header('Location: inscription.php');
     
-    // TO DO : Afficher un message expliquant l'erreur
+    // TODO: Afficher un message expliquant l'erreur
 }
 
 
@@ -92,7 +92,7 @@ function securise_chaine($chaine)
     $chaineSecurisee = trim($chaine); // trim : supprime les espaces avant et après
     $chaineSecurisee = strtolower($chaineSecurisee); // strtolower : met en minuscule
     $chaineSecurisee = stripslashes($chaineSecurisee); // stripslashes : enlève les \
-    $chaineSecurisee = htmlspecialchars($chaineSecurisee); // htmlspecialchars : enlève le rsique d'exécution de script JavaScript ou HTML en transformant les < en &lt
+    $chaineSecurisee = htmlspecialchars($chaineSecurisee); // htmlspecialchars : enlève le risque d'exécution de script JavaScript ou HTML en transformant les < en &lt
     return $chaineSecurisee;
 }
 

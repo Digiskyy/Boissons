@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 if(isset($_POST['pseudo']) AND isset($_POST['mdp']))
 {
@@ -19,26 +20,21 @@ if(isset($_POST['pseudo']) AND isset($_POST['mdp']))
         {
             if(strcmp($mdpBDD['mdp'], $mdpConnexion) == 0) // Si les mots de passe correspondent
             {
-                //echo 'Vous êtes connecté.<br />';
-                session_start();
-                $_SESSION["newsession"] = $pseudoConnexion;
-                //variable newsession qui sera vérifiée au moment d'ouvrir la page d'accueil
+                $_SESSION['pseudo'] = $pseudoConnexion; // Variable pseudo qui sera vérifiée au moment d'ouvrir la page d'accueil
                 header('Location: ../index.php');
-
-                // TO DO : Rediriger sur la 1ère page mais en mode connecté (Compte, Recettes favorites, ... à la place de connexion Inscription)
             }
             else
             {
                 echo 'Le mot de passe et le pseudo ne correspondent pas.<br />';
 
-                // TO DO : Recharger la page et afficher un message => le faire avec $_SESSION je pense
+                // TODO: Recharger la page et afficher un message => le faire avec $_SESSION je pense
             }
         }
         else
         {
             echo 'Le pseudo ne correspond à aucun compte enregistré.<br />';
 
-            // TO DO : Recharger la page et afficher un message => le faire avec $_SESSION je pense
+            // TODO: Recharger la page et afficher un message => le faire avec $_SESSION je pense
         }
 
         $requeteId->closeCursor();
@@ -52,7 +48,7 @@ else
 {
     echo 'Erreur : Pas de mot de passe ou de pseudo remplis<br />';
 
-    // TO DO : Recharger la page et afficher un message => le faire avec $_SESSION je pense
+    // TODO: Recharger la page et afficher un message => le faire avec $_SESSION je pense
 }
 
 ?>
