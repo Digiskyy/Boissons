@@ -31,14 +31,14 @@ header, section
 
 body
 {
-    background: #506d78;
+    background: #0078ef;
 }
 
 h1
 {
     text-align: center;
     font-size: 2.5em;
-    color: #506d78;
+    color: #0078ef;
 }
 
 #indication
@@ -74,7 +74,7 @@ legend
     font-family: 'Open Sans Light', Helvetica, sans-serif;
     font-size: 1.2em;
     color: rgb(88, 88, 88);
-    text-shadow: 2px 2px 2px #506d78;
+    text-shadow: 2px 2px 2px #0078ef;
 }
 
 section, h1
@@ -148,11 +148,11 @@ input
 
 input[type=submit]
 {
-    background-color: #506d78;
+    background-color: #0078ef;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
-    border: 2px solid #506d78;
+    border: 2px solid #0078ef;
     cursor: pointer;
     width: 100%;
     font-family: 'Open Sans', Helvetica, sans-serif;
@@ -162,6 +162,6 @@ input[type=submit]
 input[type=submit]:hover
 {
     background-color: white;
-    color: #506d78;
-    border: 2px solid #506d78;
+    color: #0078ef;
+    border: 2px solid #0078ef;
 }

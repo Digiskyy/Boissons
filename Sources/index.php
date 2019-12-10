@@ -15,28 +15,27 @@ session_start();
     <header>
         <div class="conteneur">
             <div class="bandeau">
-                <img class="picBandeau" src="Images/bandeau.png" alt="Bandeau">
                 <!-- MENU -->
                 <ul class="menu">
                 <?php
                 if(isset($_SESSION['pseudo']))
                 {
                     // TODO: Faire une page Mon compte
-                    echo '<li><a href="#">' . $_SESSION['pseudo'] . '</a></li>'; // Gérer son compte, modifier ses informations
-                    echo '<li><a class="inscription" href="panier.php">Panier</a></li>'; // Son panier de recettes qu'il a ajoutées
-                    echo '<li><a class="inscription" href="Connexion_Inscription/deconnexion.php">Deconnexion</a></li>';
+                    echo '<li><a class="menu_item" id="pseudo" href="#">' . $_SESSION['pseudo'] . '</a></li>'; // Gérer son compte, modifier ses informations
+                    echo '<li><a class="menu_item" id="deco" href="Connexion_Inscription/deconnexion.php">Déconnexion</a></li>';
+                    echo '<li><a class="menu_item" href="panier.php">Panier</a></li>'; // Son panier de recettes qu'il a ajoutées
                 }
                 else // Au début, pas connecté
                 {
-                    echo '<li><a href="Connexion_Inscription/connexion.php">Connexion</a></li>';
-                    echo '<li><a class="inscription" href="panier.php">Panier</a></li>'; // Son panier de recettes qu'il a ajoutées
-                    echo '<li><a class="inscription" href="Connexion_Inscription/inscription.php">Inscription</a></li>';
+                    echo '<li><a class="menu_item" href="Connexion_Inscription/connexion.php">Connexion</a></li>';
+                    echo '<li><a class="menu_item" href="Connexion_Inscription/inscription.php">Inscription</a></li>';
+                    echo '<li><a class="menu_item" href="panier.php">Panier</a></li>'; // Son panier de recettes qu'il a ajoutées
                 }
                 ?>
                 </ul>
             </div>
             <div class="contenu">
-                <img class="picTitle" src="Images/LogoWeDrink.png" alt="Logo WeDrink">
+                <img id="picTitle" src="Images/LogoWeDrink.png" alt="Logo WeDrink">
                 <p id="sous-titre">Emerveillez vos papilles et vos invités avec nos délicieuses recettes de cocktails !</p>
                 <!-- CONTENU -->
                 <section>
