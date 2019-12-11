@@ -25,16 +25,16 @@ if(isset($_POST['pseudo']) AND isset($_POST['mdp']))
             }
             else
             {
-                echo 'Le mot de passe et le pseudo ne correspondent pas.<br />';
-
-                // TODO: Recharger la page et afficher un message => le faire avec $_SESSION je pense
+                $_SESSION['erreurConnexion'] = true;
+                $_SESSION['erreurConnexion_type'] = 'pseudo_mdp';
+                header('Location: connexion.php');
             }
         }
         else
         {
-            echo 'Le pseudo ne correspond à aucun compte enregistré.<br />';
-
-            // TODO: Recharger la page et afficher un message => le faire avec $_SESSION je pense
+            $_SESSION['erreurConnexion'] = true;
+            $_SESSION['erreurConnexion_type'] = 'compte';
+            header('Location: connexion.php');
         }
 
         $requeteId->closeCursor();
@@ -46,9 +46,9 @@ if(isset($_POST['pseudo']) AND isset($_POST['mdp']))
 }
 else
 {
-    echo 'Erreur : Pas de mot de passe ou de pseudo remplis<br />';
-
-    // TODO: Recharger la page et afficher un message => le faire avec $_SESSION je pense
+    $_SESSION['erreurConnexion'] = true;
+    $_SESSION['erreurConnexion_type'] = '';
+    header('Location: connexion.php');
 }
 
 ?>

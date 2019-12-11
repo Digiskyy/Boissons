@@ -1,6 +1,4 @@
-<!-- TO DO : Faire en sorte d'afficher un message quand il y a une erreur dans le formulaire et que la page est rechargée (ex: 2 mots de passe différents. etc.)
-A faire avec SESSION je pense -->
-
+<?php session_start()  ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +11,7 @@ A faire avec SESSION je pense -->
     <!-- EN-TETE -->
     <header>
         <a href="../index.php" title="Revenir à la page principale"><img id="picBandeau" src="../Images/bandeau.png" alt="Bandeau"></a>
-        <!-- TODO: Faire en sorte que l'image soit juste le log et pas tout le bandeau et créer le bandeau en CSS plutôt -->
+        <!-- TODO: Faire en sorte que l'image soit juste le logo et pas tout le bandeau et créer le bandeau en CSS plutôt -->
     </header>
     
     <!-- CONTENU -->
@@ -21,6 +19,30 @@ A faire avec SESSION je pense -->
         <form action="inscription_post.php" method="POST">
             <h1>Inscription</h1>
             <p id=indication>Les champs <em>Pseudo</em> et <em>Mot de passe</em> sont obligatoires.<br />Nous vous informons que les mineurs ne peuvent pas créer de compte.</p>
+            <?php
+            // TODO: Enlever les affichage de tableau de SESSION qui sont en commentaire et réglez l'affichage des messages des des erreurs d'inscription (pas de création de variable dans SESSION)
+            //var_dump($_SESSION);
+            if(isset($_SESSION['erreurInscription']) && isset($_SESSION['erreurInscription_type']))
+            {
+                if($_SESSION['erreurInscription'] === true)  // === est le symbole de comparaison de l'égalité comme == mais n'accepte pas le transtypage (il faut que les deux variables soient du même type)
+                {
+                    if($_SESSION['erreurInscription_type'] === 'mdp')
+                        echo '<p class="erreur">Les deux mots de passe ne correspondent pas.</p>';
+                    else if($_SESSION['erreurInscription_type'] === 'pseudo_mdp')
+                        echo '<p class="erreur">Le pseudo et le mot de passe doivent contenir au minimum 2 lettres.</p>';
+                    else if($_SESSION['erreurInscription_type'] === 'champs_obligatoires')
+                        echo '<p class="erreur">Le pseudo, le mot de passe et sa confirmation sont à remplir obligatoirement.</p>';
+                    else
+                        echo '<p class="erreur">Une erreur est survenue, veuillez réessayer.</p>';
+
+                    /* On réinitialise les erreurs => plus d'erreur */
+                    $_SESSION['erreurInscription'] = false;
+                    $_SESSION['erreurInscription_type'] = '';
+                    
+                    //var_dump($_SESSION);
+                }
+            }
+            ?>
             <p>
                 <label for="pseudo">Pseudo</label>
                 <input type="text" name="pseudo" id="pseudo" class="inputEcrivable" pattern="^[A-Za-z0-9_éèàùâêôîâ']{2,}$" title="Pseudo : 2 lettres ou chiffres minimum, _ autorisé" maxlength="20" autofocus required /> <!-- pattern permet de mettre une regex que doit respecter l'utilisateur pour que le champ soit valide (ici, pseudo de 2 lettres ou chiffres minimum, _ autorisé) -->

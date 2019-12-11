@@ -11,8 +11,6 @@ if(isset($_POST['pseudo'])
     $mdp = securise_chaine($_POST['mdp']);
     $mdpConf = securise_chaine($_POST['mdpConf']);
 
-    // TODO: Quand il y a des erreurs lors de la validation du formulaire, recharger la page et afficher les messages correspondants
-
     if(strlen($pseudo) > 1 // Pseudo doit avoir minimum 2 lettres
         AND strlen($mdp) > 1) // Mot de passe minimum 2 lettres
     {
@@ -47,39 +45,37 @@ if(isset($_POST['pseudo'])
                 die('Erreur : ' . $e->getMessage());
             }
 
-            /* Redirection vers la page de connexion */
+            // TODO: Pas de messsage de confiramtion qui s'affiche car pas de création de variable dans SESSION, PQ ?
+            /* Redirection vers la page de connexion avec affichage d'un message de confirmation */
+            $_SESSION['confirmation'] = true;
             header('Location: connexion.php');
-            
-            // TODO: Afficher un message sur la page de connexion informant que le compte est bien enregistré
         }
         else
         {
-            // echo 'Les deux mots de passe ne correspondent pas.<br />';
-
-            /* Redirection vers la page d'inscription */
+            // TODO: Enlever les affichage de tableau de SESSION qui sont en commentaire et réglez l'affichage des messages des des erreurs d'inscription (pas de création de variable dans SESSION)
+            //var_dump($_SESSION);
+            //echo 'COUCOU';
+            /* Redirection vers la page d'inscription avec affichage d'un message d'erreur */
+            $_SESSION['erreurInscription'] = true;
+            $_SESSION['erreurInscription_type'] = 'mdp';
             header('Location: inscription.php');
-            
-            // TODO: Afficher un message expliquant l'erreur
+            //var_dump($_SESSION);
         }
     }
     else
     {
-        // echo 'Le pseudo et le mot de passe doivent contenir au minimum 2 lettres.<br />';
-
-        /* Redirection vers la page d'inscription */
+        /* Redirection vers la page d'inscription avec affichage d'un message d'erreur */
+        $_SESSION['erreurInscription'] = true;
+        $_SESSION['erreurInscription_type'] = 'pseudo_mdp';
         header('Location: inscription.php');
-        
-        // TODO: Afficher un message expliquant l'erreur
     }
 }
 else
 {
-    //echo 'Le pseudo, le mot de passe et sa confirmation sont à remplir obligatoirement.<br />';
-
-    /* Redirection vers la page d'inscription */
+    /* Redirection vers la page d'inscription avec affichage d'un message d'erreur */
+    $_SESSION['erreurInscription'] = true;
+    $_SESSION['erreurInscription_type'] = 'champs_obligatoires';
     header('Location: inscription.php');
-    
-    // TODO: Afficher un message expliquant l'erreur
 }
 
 
