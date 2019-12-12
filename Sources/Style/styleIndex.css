@@ -49,6 +49,7 @@ header
     display: flex;
     position: fixed;
     font-size: 2vw;
+    z-index: 2;
 }
 
 /*a:link

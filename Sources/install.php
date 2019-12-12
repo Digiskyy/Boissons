@@ -1,16 +1,21 @@
 <?php
-	define('BDD_NOM', 'projet_boissons');
-	define('USER', 'root');
+	define('BDD_NOM', 'id11916486_projet_boissons');
+	define('USER', 'id11916486_admin');
 
 	/* =============== Création de la base de données =============== */
 	echo 'Création de la base de données et de ses tables<br />';
 	try
 	{
-		$bdd= new PDO('mysql:host=127.0.0.1;charset=utf8', USER, '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-		$creation = 'DROP DATABASE IF EXISTS projet_boissons ;
-					CREATE DATABASE IF NOT EXISTS projet_boissons ;
-					USE projet_boissons ;
-
+		$bdd= new PDO('mysql:host=localhost;charset=utf8', USER, 'admin', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+		$creation = 'USE id11916486_projet_boissons ;
+                    
+                    DROP TABLE IF EXISTS RecettesPreferees ;
+                    DROP TABLE IF EXISTS Utilisateurs ;
+                    DROP TABLE IF EXISTS Constitution ;
+                    DROP TABLE IF EXISTS Supercategories ;
+                    DROP TABLE IF EXISTS Aliments ;
+                    DROP TABLE IF EXISTS Recettes ;
+                    
 					CREATE TABLE Recettes (
 						idRecette INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 						titre VARCHAR(100) NOT NULL UNIQUE,

@@ -14,7 +14,7 @@ if(isset($_GET['recherche'])) // Si l'utilisateur a fait une recherche
     try
     {
         /* ===== Connexion à la base de données ===== */
-        $bdd = new PDO('mysql:host=127.0.0.1;dbname=projet_boissons;charset=utf8;', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd = new PDO('mysql:host=localhost;dbname=id11916486_projet_boissons;charset=utf8;', 'id11916486_admin', 'admin', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
         /* ===== Recherche dans la table Recettes ===== */
 

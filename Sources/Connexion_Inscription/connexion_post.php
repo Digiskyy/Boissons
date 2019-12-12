@@ -9,7 +9,7 @@ if(isset($_POST['pseudo']) AND isset($_POST['mdp']))
         $mdpConnexion = $_POST['mdp'];
 
         /* Connexion à la base de données */
-        $bdd = new PDO('mysql:host=127.0.0.1;dbname=projet_boissons;charset=utf8;', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd = new PDO('mysql:host=localhost;dbname=id11916486_projet_boissons;charset=utf8;', 'id11916486_admin', 'admin', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
         /* Récupération du mot de passe dans la BDD correspondant au pseudo écrit par l'utilisateur */
         $requeteId = $bdd->prepare('SELECT mdp FROM Utilisateurs WHERE pseudo = ?;'); // Une seule ligne renvoyée au max. car pseudo unique dans la bdd
