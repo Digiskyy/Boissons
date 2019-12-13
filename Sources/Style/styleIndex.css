@@ -49,6 +49,7 @@ header
     display: flex;
     position: fixed;
     font-size: 2vw;
+    z-index: 2;
 }
 
 /*a:link
@@ -108,6 +109,7 @@ header
     display: block;
     margin: auto;
     width: 40%;
+    z-index: 1;
 }
 
 .conteneur
