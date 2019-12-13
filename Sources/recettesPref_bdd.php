@@ -30,9 +30,13 @@ if(!$erreur)
     {
         die('Erreur : ' . $e->getMessage());
     }
-}
 
-header('Location : panier.php');
+    //$_SESSION['ajoutRecettePref'] = true; // Variable qui sera vérifiée de retour à la page panier.php
+}
+/*else
+    $_SESSION['ajoutRecettePref'] = false; // Variable qui sera vérifiée de retour à la page panier.php*/
+
+header('Location: panier.php');
 
 
 /**

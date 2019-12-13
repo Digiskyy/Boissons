@@ -64,11 +64,12 @@ if(!$erreur)
 						{
 							echo '<tr>';
 							echo '<td><a href="recette.php?idRecette='. htmlspecialchars($_SESSION['panier']['idRecette'][$i]) . '" title="Aller sur la page de la recette">' . htmlspecialchars($_SESSION['panier']['titre'][$i]) . '</a></td>';
-							echo '<td><a href="panier.php?action=suppression&idRecette=' . htmlspecialchars($_SESSION['panier']['idRecette'][$i]) . '" title="Supprimer du panier de recette" id="supprimer"> X </a></td>';
+							echo '<td><a href="panier.php?action=suppression&idRecette=' . htmlspecialchars($_SESSION['panier']['idRecette'][$i]) . '" title="Supprimer du panier de recette" class="supprimer"> X </a></td>';
 							// SI connecté ET SI recette pas dans la table des recettes préférées et lié à cet utilisateur, alors afficher un lien pour ajouter dans la bdd
 							if(isset($_SESSION['pseudo']) && isset($_SESSION['idUtilisateur'])) // Si connecté
 							{
-								echo '<td><a href="recettesPref_bdd.php?action=ajout&idRecette=' . htmlspecialchars($_SESSION['panier']['idRecette'][$i]) . '&idUtilisateur=' . htmlspecialchars($_SESSION['idUtilisateur']) . '" title="Ajouter dans mes recettes préférées" id="ajouterRecettePref"> + </a></td>';
+								// TODO: Vérifier si la recette est déjà dans la table RecettesPreferees ou gérer le retour de recettesPref_bdd.php avec les variables de session pour savoir laquelle vient d'être ajoutée
+								echo '<td><a href="recettesPref_bdd.php?action=ajout&idRecette=' . htmlspecialchars($_SESSION['panier']['idRecette'][$i]) . '&idUtilisateur=' . htmlspecialchars($_SESSION['idUtilisateur']) . '" title="Ajouter dans mes recettes préférées" class="ajouterRecettePref"> + </a></td>';
 							}
 							echo '</tr>';
 						}
