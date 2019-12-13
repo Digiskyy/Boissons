@@ -34,13 +34,15 @@
 					$_SESSION['erreurConnexion'] = false;
 					$_SESSION['erreurConnexion_type'] = '';
 				}
-				else if(isset($_SESSION['confirmation']))
+			}
+
+			if(isset($_SESSION['confirmation']))
+			{
+				if($_SESSION['confirmation'] === true)
 				{
-					if($_SESSION['confirmation'] === true)
-					{
-						echo '<p id="confirmation">Votre compte a bien été enregistré.</p>';
-						$_SESSION['confirmation'] = false;
-					}
+					echo '<p id="confirmation">Votre compte a bien été enregistré.</p>';
+					$_SESSION['confirmation'] = false;
+					unset($_SESSION['confirmation']); // La variable n'existe plus dans le tableau
 				}
 			}
 			?>

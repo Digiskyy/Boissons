@@ -1,4 +1,5 @@
 <?php
+session_start();
 /* Page qui permet de créer un compte pour un utilisateur en enregistrant ses informations dans la base de données et qui le redirigera vers la page de connexion */
 
 if(isset($_POST['pseudo']) 
@@ -21,45 +22,59 @@ if(isset($_POST['pseudo'])
             {
                 $bdd = new PDO('mysql:host=127.0.0.1;dbname=projet_boissons;charset=utf8;', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
-                $insertionUser = 'INSERT INTO Utilisateurs(pseudo, mdp, sexe, prenom, nom, age, email, telephone, adresse, codePostal, ville, dateCreation) 
-                                    VALUES (:pseudo, :mdp, :sexe, :prenom, :nom, :age, :email, :tel, :adresse, :codePostal, :ville, NOW());';
-                $insertionUserRequete = $bdd->prepare($insertionUser);
+                /* On vérifie que le pseudonyme n'existe pas déjà dans la base de données */
+                $rechercheUser = 'SELECT * FROM Utilisateurs WHERE pseudo = ?;';
+                $rechercheUserRequete = $bdd->prepare($rechercheUser);
+                $rechercheUserRequete->execute(array($pseudo));
+                $user = $rechercheUserRequete->fetch(); // Qu'une seule ligne dans la requête car utilisation d'une fonction d'agrégation (COUNT) donc pas de boucle
+                $rechercheUserRequete->closeCursor();
 
-                /* Insertion des données utilisateurs en fonction de leur remplissement ou pas */
-                $donnees = array('pseudo' => $_POST['pseudo'], 'mdp' => $mdp);
-                remplir_tableau($donnees, 'sexe');
-                remplir_tableau($donnees, 'prenom');
-                remplir_tableau($donnees, 'nom');
-                remplir_tableau($donnees, 'age');
-                remplir_tableau($donnees, 'email');
-                remplir_tableau($donnees, 'tel');
-                remplir_tableau($donnees, 'adresse');
-                remplir_tableau($donnees, 'codePostal');
-                remplir_tableau($donnees, 'ville');
+                if(empty($user)) // Si la requête est vide = si pseudo pas encore utilisé
+                {
+                    /* Insertion des données dans la base */
+                    $insertionUser = 'INSERT INTO Utilisateurs(pseudo, mdp, sexe, prenom, nom, age, email, telephone, adresse, codePostal, ville, dateCreation) 
+                    VALUES (:pseudo, :mdp, :sexe, :prenom, :nom, :age, :email, :tel, :adresse, :codePostal, :ville, NOW());';
+                    $insertionUserRequete = $bdd->prepare($insertionUser);
 
-                $insertionUserRequete->execute($donnees);
-                $insertionUserRequete->closeCursor();
+                    /* Insertion des données utilisateurs en fonction de leur remplissement ou pas */
+                    $donnees = array('pseudo' => $_POST['pseudo'], 'mdp' => $mdp);
+                    remplir_tableau($donnees, 'sexe');
+                    remplir_tableau($donnees, 'prenom');
+                    remplir_tableau($donnees, 'nom');
+                    remplir_tableau($donnees, 'age');
+                    remplir_tableau($donnees, 'email');
+                    remplir_tableau($donnees, 'tel');
+                    remplir_tableau($donnees, 'adresse');
+                    remplir_tableau($donnees, 'codePostal');
+                    remplir_tableau($donnees, 'ville');
+
+                    $insertionUserRequete->execute($donnees);
+                    $insertionUserRequete->closeCursor();
+
+                    /* Redirection vers la page de connexion avec affichage d'un message de confirmation */
+                    $_SESSION['confirmation'] = true;
+                    header('Location: connexion.php');
+                }
+                else
+                {
+                    /* Redirection vers la page d'inscription avec affichage d'un message d'erreur */
+                    $_SESSION['erreurInscription'] = true;
+                    $_SESSION['erreurInscription_type'] = 'pseudo';
+                    header('Location: inscription.php');
+                }
+                
             }
             catch(PDOException $e)
             {
                 die('Erreur : ' . $e->getMessage());
             }
-
-            // TODO: Pas de messsage de confiramtion qui s'affiche car pas de création de variable dans SESSION, PQ ?
-            /* Redirection vers la page de connexion avec affichage d'un message de confirmation */
-            $_SESSION['confirmation'] = true;
-            header('Location: connexion.php');
         }
         else
         {
-            // TODO: Enlever les affichage de tableau de SESSION qui sont en commentaire et réglez l'affichage des messages des des erreurs d'inscription (pas de création de variable dans SESSION)
-            //var_dump($_SESSION);
-            //echo 'COUCOU';
             /* Redirection vers la page d'inscription avec affichage d'un message d'erreur */
             $_SESSION['erreurInscription'] = true;
             $_SESSION['erreurInscription_type'] = 'mdp';
             header('Location: inscription.php');
-            //var_dump($_SESSION);
         }
     }
     else

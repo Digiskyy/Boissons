@@ -20,26 +20,24 @@
             <h1>Inscription</h1>
             <p id=indication>Les champs <em>Pseudo</em> et <em>Mot de passe</em> sont obligatoires.<br />Nous vous informons que les mineurs ne peuvent pas créer de compte.</p>
             <?php
-            // TODO: Enlever les affichage de tableau de SESSION qui sont en commentaire et réglez l'affichage des messages des des erreurs d'inscription (pas de création de variable dans SESSION)
-            //var_dump($_SESSION);
             if(isset($_SESSION['erreurInscription']) && isset($_SESSION['erreurInscription_type']))
             {
                 if($_SESSION['erreurInscription'] === true)  // === est le symbole de comparaison de l'égalité comme == mais n'accepte pas le transtypage (il faut que les deux variables soient du même type)
                 {
                     if($_SESSION['erreurInscription_type'] === 'mdp')
                         echo '<p class="erreur">Les deux mots de passe ne correspondent pas.</p>';
+                    else if($_SESSION['erreurInscription_type'] === 'pseudo')
+                        echo '<p class="erreur">Ce pseudo est déjà utilisé.</p>';
                     else if($_SESSION['erreurInscription_type'] === 'pseudo_mdp')
-                        echo '<p class="erreur">Le pseudo et le mot de passe doivent contenir au minimum 2 lettres.</p>';
+                        echo '<p class="erreur">Le pseudo et le mot de passe doivent contenir au minimum 2 lettres.</p>';  // Normalement jamais écrit car les attributs en HTML l'en empêche
                     else if($_SESSION['erreurInscription_type'] === 'champs_obligatoires')
-                        echo '<p class="erreur">Le pseudo, le mot de passe et sa confirmation sont à remplir obligatoirement.</p>';
+                        echo '<p class="erreur">Le pseudo, le mot de passe et sa confirmation sont à remplir obligatoirement.</p>';  // Normalement jamais écrit car les attributs en HTML l'en empêche
                     else
                         echo '<p class="erreur">Une erreur est survenue, veuillez réessayer.</p>';
 
                     /* On réinitialise les erreurs => plus d'erreur */
                     $_SESSION['erreurInscription'] = false;
                     $_SESSION['erreurInscription_type'] = '';
-                    
-                    //var_dump($_SESSION);
                 }
             }
             ?>
