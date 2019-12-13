@@ -40,7 +40,7 @@ session_start();
                 <!-- CONTENU -->
                 <section>
                     <form action="recherche.php" method="GET">
-                        <input type="search" name="recherche" id="recherche" placeholder="Que voulez-vous boire ?" pattern="[a-zA-Zéèàùâêûîôç]*" autofocus required />
+                        <input type="search" name="recherche" id="recherche" placeholder="Que voulez-vous boire ?" pattern="[a-zA-Zéèàùâêûîôç\']+" autofocus required />
                         <button type="submit" class="searchButton"><i class="fas fa-search"></i></button>
                     </form>
                 </section>

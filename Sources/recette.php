@@ -77,7 +77,7 @@ Function transforme_chaine($chaine)
         </h1><!--TO DO Mettre titre de la recette -->
 
         <?php echo '<a href="panier.php?action=ajout&amp;idRecette=' . rawurlencode($recette['idRecette']) . '&amp;titre=' . rawurlencode($recette['titre']) .'" id="ajoutPanier">Ajouter au panier</a>'; /*   onclick="window.open(this.href, \'\', \'toolbar=no, location=no, directories=no, status=yes, scrollbars=yes, resizable=yes, copyhistory=no, width=600, height=350\'); return false;" */ ?>
-        <!-- TODO: Faire en sorte que quand on ajoute une recette dans le panier, on ne soit pas rediriger vers le panier mais juste que la recette est ajouté
+        <!-- TODO: Faire en sorte que quand on ajoute une recette dans le panier, on ne soit pas rediriger vers le panier mais juste que la recette soit ajoutée
         et avoir un lien pour accéder au panier en haut de la page -->
         <!-- PHOTO DU COCKTAIL (s'il y en a une) -->
         <p>

@@ -106,9 +106,14 @@ article h2
 
 #ajoutPanier:hover
 {
-    background-color: #2338b8;
+    background-image: linear-gradient(to top right, #004080, #00d3ef);
     color: #fff;
     font-weight: normal;
+}
+
+#ajoutPanier:active
+{
+    font-weight: bold;
 }
 
 footer
