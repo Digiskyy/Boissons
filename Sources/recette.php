@@ -128,7 +128,7 @@ Function transforme_chaine($chaine)
                     <h2>Préparation</h2>
                     <p>
                         <?php
-                                echo nl2br($recette['preparation']); // nl2br remplace tous les passages à la ligne par des balise <br /> en HTML
+                            echo nl2br($recette['preparation']); // nl2br remplace tous les passages à la ligne par des balises <br /> en HTML
                         ?>
                     </p>
                 </div>

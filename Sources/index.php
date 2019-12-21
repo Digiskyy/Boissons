@@ -20,8 +20,7 @@ session_start();
                 <?php
                 if(isset($_SESSION['pseudo']))
                 {
-                    // TODO: Faire une page Mon compte
-                    echo '<li><a class="menu_item" id="pseudo" href="#">' . $_SESSION['pseudo'] . '</a></li>'; // Gérer son compte, modifier ses informations
+                    echo '<li><a class="menu_item" id="pseudo" href="compte.php">' . $_SESSION['pseudo'] . '</a></li>'; // Gérer son compte, modifier ses informations
                     echo '<li><a class="menu_item" id="deco" href="Connexion_Inscription/deconnexion.php">Déconnexion</a></li>';
                     echo '<li><a class="menu_item" href="panier.php">Panier</a></li>'; // Son panier de recettes qu'il a ajoutées
                 }
