@@ -9,11 +9,16 @@ if(isset($_SESSION['pseudo']))
         $bdd = new PDO('mysql:host=127.0.0.1;dbname=projet_boissons;charset=utf8;', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
         /* ===== Requête pour les informations de l'utilisateur ===== */
-        $infoUtilisateurBdd = $bdd->prepare('SELECT * FROM Utilisateurs WHERE pseudo = ?');
+        $infoUtilisateurBdd = $bdd->prepare('SELECT * FROM Utilisateurs WHERE pseudo = ?;');
         $infoUtilisateurBdd->execute(array($_SESSION['pseudo']));
         $infoUtilisateur = $infoUtilisateurBdd->fetch(); // Qu'un seul résultat car pseudo unique donc pas de boucle while
 
         /* ===== Requête pour les recettes préférées de l'utilisateur ===== */
+        $recettesPrefBdd = $bdd->prepare('SELECT * 
+                                            FROM Recettes
+                                            INNER JOIN RecettesPreferees ON Recettes.idRecette = RecettesPreferees.idRecette
+                                            WHERE idUtilisateur = ?;');
+        $recettesPrefBdd->execute(array($infoUtilisateur['idUtilisateur']));
     }
     catch(PDOException $e)
     {
@@ -30,7 +35,7 @@ else
 <html>
 <head>
 	<meta charset="utf-8" />
-	<link rel="Stylesheet" href="../Style/styleCompte.css" />
+	<link rel="Stylesheet" href="Style/styleCompte.css" />
 	<title>WeDrink | Mon compte</title>
 </head>
 <body>
@@ -47,7 +52,7 @@ else
             echo '<h1>Mon compte</h1>';
 
             echo '<article>';
-            echo '<h2>' . $infoUtilisateur['pseudo'] . '</h2>';
+            echo '<h2 id="pseudo">' . $infoUtilisateur['pseudo'] . '</h2>';
             echo '<p>Sexe : ' . $infoUtilisateur['sexe'] . '<br />';
             echo 'Prénom : ' . $infoUtilisateur['prenom'] . '<br />';
             echo 'Nom : ' . $infoUtilisateur['nom'] . '<br />';
@@ -59,17 +64,26 @@ else
             echo 'Ville : ' . $infoUtilisateur['ville'] . '<br />';
             echo 'Date de création du compte : ' . $infoUtilisateur['dateCreation'] . '<br />'; // TODO: Mettre la date en format français
 
-            // TODO: Vérifier qu'il n'y a pas déjà la recette préférées dans la base de données quand un utilisateur veut en ajouter une
-            // TODO: Quand une recette est ajoutée dans les recettes préférées d'un utilisateur, il ne faut plus afficher le plus à côté de la recette
-            // TODO: Quand un utilisateur est connecté, on ajout dans son panier toutes les recettes préférées qu'il a enregistrées
+            // TODO: Quand un utilisateur est connecté, on ajoute dans son panier toutes les recettes préférées qu'il a enregistrées
 
             echo '</p></article>';
 
-            echo '<article>';
+            echo '<article><p>';
             echo '<h2>Mes recettes préférées</h2>';
-            echo '<p>';
 
-
+            if($recettesPref = $recettesPrefBdd->fetch()) // Si la recherche n'est pas vide
+            {
+                echo '<ul id="recettesPref">';
+                do
+                {
+                    echo '<li><a href="recette.php?idRecette=' . $recettesPref['idRecette'] . '" title="Aller à la recette">' . $recettesPref['titre'] . '</a></li>';
+                } while($recettesPref = $recettesPrefBdd->fetch());
+                echo '</ul>';
+            }
+            else // Pas de recettes préférées enregistrées pour cet utilisateur
+            {
+                echo 'Pas de recette préférées enregistrées.';
+            }
             echo '</p></article>';
         }
         else
@@ -78,4 +92,9 @@ else
         }
         ?>
     </section>
+
+    <!-- PIED DE PAGE -->
+    <footer>
+        <p><a href="index.php" id="lien_page_principale">Revenir à la page principale</a></p>
+    </footer>
 </body>

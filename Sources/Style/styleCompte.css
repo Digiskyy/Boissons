@@ -1,0 +1,128 @@
+/* Polices d'éccriture */
+@font-face
+{
+    font-family: 'Open Sans';
+    src: url(../Polices/OpenSans-Regular.ttf) format('truetype'); 
+}
+
+@font-face
+{
+    font-family: 'Open Sans Light';
+    src: url(../Polices/OpenSans-Light.ttf) format('truetype'); 
+}
+
+@font-face
+{
+    font-family: 'Chapaza';
+    src: url(../Polices/Chapaza.ttf) format('truetype'); 
+}
+
+body
+{
+    background-color: rgb(224, 250, 255);
+    font-family: 'Open Sans', 'Helevetica', sans-serif;
+    font-size: 1em;
+}
+
+a
+{
+    color: #014a4e;
+    text-decoration: none;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: normal;
+}
+
+a:hover
+{
+    color: #fff;
+    background-color: #003366;
+}
+
+a:active
+{
+    font-weight: bold;
+}
+
+section
+{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: left;
+    justify-content: center;
+    width: 80%;
+    margin: auto;
+    text-align: left;
+}
+
+section h1
+{
+    font-family: 'Chapaza', 'Open Sans', 'Helevetica', serif;
+    font-size: 3.5em;
+    color: #003366;
+    text-align: center;
+}
+
+article
+{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: justify;
+    font-family: 'Open Sans', 'Helevetica', sans-serif;
+    font-size: 1em;
+}
+
+
+article h2
+{
+    font-family: 'Open Sans Light', 'Open Sans', 'Helevetica', sans-serif;
+    font-size: 1.8em;
+    color: #014a4e;
+}
+
+li
+{
+    margin: 0.25em;
+}
+
+#recettesPref
+{
+    padding: 0;
+    margin: 0 2em;
+}
+
+#pseudo
+{
+    padding: 0.25em 0.5em;
+    margin: 1em;
+    color: #fff;
+    background-image: radial-gradient(#0078ef, #003366);
+    box-shadow: 0px 0px 10px #003366;
+    border-radius: 10px;
+}
+
+footer
+{
+    font-family: 'Open Sans Light', 'Open Sans', 'Helvetica', sans-serif;
+    text-align: center;
+}
+
+#lien_page_principale
+{
+    color: #0059b3;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+#lien_page_principale:hover
+{
+    color: rgb(224, 250, 255);
+    background-image: linear-gradient(to top right, #003366, #0078ef);
+    /*background-color: #0059b3;*/
+    font-weight: normal;
+}
