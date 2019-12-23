@@ -1,5 +1,5 @@
 <?php
-session_start();
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +8,25 @@ session_start();
     <meta charset="utf-8" />
     <title>WeDrink</title>
     <link rel="Stylesheet" href="Style/styleIndex.css" />
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <!--AUTOCOMPLETION-->
+    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script>
+
+        //Javascript
+        function check() {
+
+            $('#recherche').autocomplete({
+                source: 'liste.php'//requetes SQL dans liste.php pour verifier si un aliment ou une recette correspond aux lettre dejà tapées
+            });
+
+        }
+
+    </script> 
 </head>
 
 <body>
@@ -39,7 +57,7 @@ session_start();
                 <!-- CONTENU -->
                 <section>
                     <form action="recherche.php" method="GET">
-                        <input type="search" name="recherche" id="recherche" placeholder="Que voulez-vous boire ?" pattern="[a-zA-Zéèàùâêûîôç\']+" autofocus required />
+                        <input type="search" name="recherche" id="recherche" placeholder="Que voulez-vous boire ?" pattern="[a-zA-Zéèàùâêûîôç\']+" autofocus required onKeyUp="check()" onChange="check()" />
                         <button type="submit" class="searchButton"><i class="fas fa-search"></i></button>
                     </form>
                 </section>
