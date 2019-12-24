@@ -26,18 +26,6 @@
 
         }
 
-        //HIERARCHIE
-
-        function recupererSousCateg(aliments) {
-
-        }
-
-        function createList(aliments) {
-            array.<?php foreach ($array as $key => $value): ?>
-                
-            <?php endforeach ?>
-        }
-
     </script>
 
 </head>
