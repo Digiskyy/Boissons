@@ -177,6 +177,14 @@ header
     border: 3px solid #0059b3;
 }
 
+.advancedSearchButton
+{
+    border: none;
+    background-color: #ffffff;
+    margin-top: 4%;
+    cursor: pointer;
+}
+
 .searchButton:hover
 {
     background-color: #0078ef;

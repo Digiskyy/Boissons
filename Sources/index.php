@@ -21,12 +21,25 @@
         function check() {
 
             $('#recherche').autocomplete({
-                source: 'liste.php'//requetes SQL dans liste.php pour verifier si un aliment ou une recette correspond aux lettre dejà tapées
+                source: 'liste_completion.php'//requetes SQL dans liste.php pour verifier si un aliment ou une recette correspond aux lettre dejà tapées
             });
 
         }
 
-    </script> 
+        //HIERARCHIE
+
+        function recupererSousCateg(aliments) {
+
+        }
+
+        function createList(aliments) {
+            array.<?php foreach ($array as $key => $value): ?>
+                
+            <?php endforeach ?>
+        }
+
+    </script>
+
 </head>
 
 <body>
@@ -66,13 +79,15 @@
     </header>
 
     <main>
-        <div class="cover">
-        <h1>Recherche avancée</h1>
-        <!-- Voir l'énoncé du projet, notamment le point 1 et 4 qu'on fera sur cette page
-        - Faire la complétion dans le champ recherche
-        - Choisir des aliments qu'on veut et d'autres qu'on veut pas -->
-        </div>
-        <p>
+        <form action="hierarchie.php">
+            <div class="cover">
+            <button type="submit" class="advancedSearchButton"><h1>Recherche avancée</h1></button>
+            <!-- Voir l'énoncé du projet, notamment le point 1 et 4 qu'on fera sur cette page
+            - Faire la complétion dans le champ recherche
+            - Choisir des aliments qu'on veut et d'autres qu'on veut pas -->
+            </div>
+        </form>
+        <!--<p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus modi ut pariatur aliquam necessitatibus mollitia delectus fugit autem saepe quo, 
             inventore molestiae vero sint hic voluptates deserunt adipisci dolorem ipsa?
         </p>
@@ -87,7 +102,7 @@
             inventore molestiae vero sint hic voluptates deserunt adipisci dolorem ipsa?
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
             Ad alias eligendi placeat reiciendis id fugit fugiat, enim voluptates ut consequuntur necessitatibus illum at mollitia delectus debitis, sunt labore sed deserunt.
-        </p>
+        </p>-->
     </main>
 </body>
 </html>

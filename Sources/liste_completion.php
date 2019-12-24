@@ -23,7 +23,6 @@
                                 WHERE LOWER(nomAliment) LIKE LOWER(:term) ;' ;
     $requete = $bdd->prepare($rechercheAliments);
 	$requete->execute(array('term' => '%'.$term.'%'));
-	$array = array();
 	while($donnee = $requete->fetch())
 	{
 	    array_push($array, $donnee['nomAliment']);
